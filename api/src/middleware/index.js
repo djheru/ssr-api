@@ -4,6 +4,11 @@ import cors from 'cors';
 
 const { COOKIE_KEY } = process.env;
 
+/**
+ * Sets up the express middleware
+ *
+ * @param app - Express app
+ */
 export function initializeMiddleware(app) {
   app.use(cors());
   app.use(bodyParser.json());

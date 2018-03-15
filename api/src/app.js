@@ -10,6 +10,11 @@ import { initializeAuthRoutes } from './routes/auth';
 const log = logger.log('app:server');
 log('process.env', process.env);
 
+/**
+ * Sets up the express app with mongodb connection, middleware, auth, routes and resources
+ *
+ * @returns {Promise.<*|Function>} Configured express app
+ */
 async function initializeApplication() {
   log('Initializing Application');
   const app = express();

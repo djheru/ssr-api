@@ -21,12 +21,16 @@
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
+    "babel-eslint": "^8.2.2",
     "babel-plugin-transform-object-rest-spread": "^6.26.0",
     "babel-preset-env": "^1.6.1",
+    "eslint": "^4.18.2",
+    "eslint-config-google": "^0.9.1",
     "npm-run-all": "^4.1.2",
     "rimraf": "^2.6.2"
   },
   "scripts": {
+    "lint": "eslint ./src/** ./tests/**",
     "clean": "rimraf dist && mkdir -p ./dist",
     "babel": "babel ./src -s -q -D -d ./dist",
     "babel:watch": "babel ./src -s -D -d ./dist --watch",

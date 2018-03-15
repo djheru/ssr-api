@@ -9,6 +9,11 @@ const { PORT = 8000, HOST = '0.0.0.0' } = process.env;
 
 log('initializing application');
 
+/**
+ * Initializes the express app and listens on the host/port specified in the environment config
+ *
+ * @returns {Promise.<*>}
+ */
 async function main() {
   try {
     log('Starting Server');

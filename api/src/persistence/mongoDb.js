@@ -6,6 +6,11 @@ const { MONGO_URI: dbUrl } = process.env;
 
 mongoose.Promise = global.Promise;
 
+/**
+ * Set up the mongodb connection and disconnect handlers
+ *
+ * @returns {Promise.<*>}
+ */
 export async function initializeMongoDb() {
   mongoose.connection.on('connected', () => {
     log(`Mongoose connected to ${dbUrl}`);
@@ -19,8 +24,12 @@ export async function initializeMongoDb() {
     log('Mongoose disconnected');
   });
 
-  // CAPTURE APP TERMINATION / RESTART EVENTS
-  // To be called when process is restarted or terminated
+  /**
+   * Capture app termination and restart events
+   *
+   * @param msg
+   * @param callback
+   */
   function gracefulShutdown(msg, callback) {
     mongoose.connection.close(() => {
       log(`Mongoose disconnected through ${msg}`);

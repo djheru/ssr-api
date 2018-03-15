@@ -5,7 +5,7 @@ import logger from '../utils/logger';
 const Schema = mongoose.Schema;
 const log = logger.log('app:models:user');
 
-const mapProfileToSchema = profile => ({
+const mapProfileToSchema = (profile) => ({
   name: profile.displayName,
   email: (profile.emails && profile.emails.length > 0) ? profile.emails[0].value : '',
   photo: (profile.photos && profile.photos.length > 0) ? profile.photos[0].value : '',

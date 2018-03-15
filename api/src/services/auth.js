@@ -41,6 +41,7 @@ const deserializeUser = async (id, done) => {
 };
 
 const updateUserProfile = async (accessToken, refreshToken, profile, done) => {
+  log('Updating user profile');
   profile.accessToken = accessToken;
   profile.refreshToken = refreshToken;
   try {
@@ -54,6 +55,10 @@ const updateUserProfile = async (accessToken, refreshToken, profile, done) => {
 
 const authStrategy = new GoogleStrategy(googleConfig, updateUserProfile);
 
+/**
+ * Add the auth middleware
+ * @param app - Express app
+ */
 export function initializeAuth(app) {
   passport.serializeUser(serializeUser);
   passport.deserializeUser(deserializeUser);
