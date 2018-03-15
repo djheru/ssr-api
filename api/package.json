@@ -1,0 +1,38 @@
+{
+  "name": "api",
+  "version": "0.1.0",
+  "description": "Example API for a React SSR app",
+  "main": "./dist/index.js",
+  "author": "Philip Damra <djheru@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "body-parser": "^1.18.2",
+    "chalk": "^2.3.2",
+    "cookie-session": "^2.0.0-beta.3",
+    "cors": "^2.8.4",
+    "debug": "^3.1.0",
+    "dotenv": "^5.0.1",
+    "express": "^4.16.3",
+    "ip": "^1.1.5",
+    "moment": "^2.21.0",
+    "mongoose": "^5.0.10",
+    "passport": "^0.4.0",
+    "passport-google-oauth20": "^1.0.0"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
+    "babel-preset-env": "^1.6.1",
+    "npm-run-all": "^4.1.2",
+    "rimraf": "^2.6.2"
+  },
+  "scripts": {
+    "clean": "rimraf dist && mkdir -p ./dist",
+    "babel": "babel ./src -s -q -D -d ./dist",
+    "babel:watch": "babel ./src -s -D -d ./dist --watch",
+    "watch": "npm-run-all clean babel:watch",
+    "build": "npm-run-all clean babel",
+    "serve": "DEBUG=* NODE_ENV=development node ./dist/index.js",
+    "start": "npm-run-all build serve"
+  }
+}
