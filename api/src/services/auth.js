@@ -30,7 +30,7 @@ const serializeUser = (user, done) => {
   done(null, user.id);
 };
 
-const deserializeUser = async (id, done) => {
+export const deserializeUser = async (id, done) => {
   try {
     const user = await User.findById(id).exec();
     done(null, user);
@@ -40,7 +40,7 @@ const deserializeUser = async (id, done) => {
   }
 };
 
-const updateUserProfile = async (accessToken, refreshToken, profile, done) => {
+export const updateUserProfile = async (accessToken, refreshToken, profile, done) => {
   log('Updating user profile');
   profile.accessToken = accessToken;
   profile.refreshToken = refreshToken;
