@@ -1,6 +1,6 @@
 import app from '../../src';
 
-describe('(Health Check)', () => {
+describe('[Health Check]', () => {
   let server;
   before(async () => {
     server = await app();

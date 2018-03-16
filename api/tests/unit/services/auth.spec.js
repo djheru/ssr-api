@@ -73,7 +73,7 @@ describe('(Auth Service)', () => {
     expect(appStub.use).to.be.calledWith(passportStub.session());
   });
 
-  describe('(Update User Profile', () => {
+  describe('(Update User Profile)', () => {
     const accessToken = 'some cool access token';
     const refreshToken = 'some cool refresh token';
     const profile = {
@@ -107,7 +107,7 @@ describe('(Auth Service)', () => {
     });
   });
 
-  describe('Deserialize User', () => {
+  describe('(Deserialize User)', () => {
     const id = 'me';
     const user = { id };
     const done = sinon.stub();
