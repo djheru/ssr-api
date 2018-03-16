@@ -1,0 +1,15 @@
+{
+  "extends": "../.eslintrc.json",
+  "env": {
+    "mocha": true
+  },
+  "globals": {
+    "chai": false,
+    "expect": false,
+    "sinon": false
+  },
+  "rules": {
+    "func-names": 0,
+    "no-unused-expressions": 0
+  }
+}

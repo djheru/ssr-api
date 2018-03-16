@@ -1,34 +1,15 @@
-import passport from 'passport';
-import { googlePermissionOptions } from '../services/auth';
+import {
+  authenticate,
+  authCallback,
+  redirect,
+  logout,
+  currentUser
+} from './handlers/auth';
 
 export const initializeAuthRoutes = (app) => {
-  app.get(
-    '/auth/google',
-    passport.authenticate('google', googlePermissionOptions)
-  );
-
-  app.get(
-    '/auth/google/callback',
-    passport.authenticate('google'),
-    (req, res) => {
-      res.redirect('/');
-    }
-  );
-
-  app.get(
-    '/api/auth/google/callback',
-    passport.authenticate('google'),
-    (req, res) => {
-      res.redirect('/');
-    }
-  );
-
-  app.get('/logout', (req, res) => {
-    req.logout();
-    res.redirect('/');
-  });
-
-  app.get('/current-user', (req, res) => {
-    res.json(req.user);
-  });
+  app.get('/auth/google', authenticate());
+  app.get('/auth/google/callback', authCallback(), redirect('/'));
+  app.get('/api/auth/google/callback', authCallback(), redirect('/'));
+  app.get('/logout', logout('/'));
+  app.get('/current-user', currentUser());
 };

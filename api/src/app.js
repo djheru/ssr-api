@@ -6,6 +6,7 @@ import { initializeMongoDb } from './persistence/mongoDb';
 import { initializeMiddleware } from './middleware/index';
 import { initializeAuth } from './services/auth';
 import { initializeAuthRoutes } from './routes/auth';
+import { initializePublicRoutes } from './routes/public';
 
 const log = logger.log('app:server');
 log('process.env', process.env);
@@ -23,6 +24,7 @@ async function initializeApplication() {
   initializeMiddleware(app);
   initializeAuth(app);
   initializeAuthRoutes(app);
+  initializePublicRoutes(app);
 
   return app;
 }
