@@ -7,4 +7,8 @@ export const initializePublicRoutes = (app) => {
       version: npmConfig.version
     });
   });
+
+  app.get('/', (req, res) => {
+    res.json({ status: 'ohai!' });
+  });
 };

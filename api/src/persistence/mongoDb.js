@@ -13,7 +13,7 @@ mongoose.Promise = global.Promise;
  */
 export async function initializeMongoDb() {
   mongoose.connection.on('connected', () => {
-    log(`Mongoose connected to ${dbUrl}`);
+    log(`Mongoose connected`);
   });
 
   mongoose.connection.on('error', (err) => {

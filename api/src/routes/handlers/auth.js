@@ -18,5 +18,5 @@ export const logout = (route = '/') => (req, res) => {
 };
 
 export const currentUser = () => (req, res) => {
-  res.json(req.user);
+  res.json(req.user || {});
 };

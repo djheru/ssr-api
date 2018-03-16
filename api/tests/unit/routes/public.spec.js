@@ -12,6 +12,11 @@ describe('(Public Routes)', () => {
     expect(initializePublicRoutes).to.be.a('function');
   });
 
+  it('should register the root route "/"', () => {
+    initializePublicRoutes(appStub);
+    expectRouteIsRegistered(appStub.get, '/');
+  });
+
   it('should register the route "/health-check"', () => {
     initializePublicRoutes(appStub);
     expectRouteIsRegistered(appStub.get, '/health-check');

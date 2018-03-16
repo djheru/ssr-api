@@ -1,0 +1,11 @@
+{
+  "apps": [
+    {
+      "name": "ssr-api-dev",
+      "script": "dist/index.js",
+      "watch":  [
+        "dist"
+      ]
+    }
+  ]
+}

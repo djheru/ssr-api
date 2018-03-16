@@ -9,7 +9,6 @@ import { initializeAuthRoutes } from './routes/auth';
 import { initializePublicRoutes } from './routes/public';
 
 const log = logger.log('app:server');
-log('process.env', process.env);
 
 /**
  * Sets up the express app with mongodb connection, middleware, auth, routes and resources

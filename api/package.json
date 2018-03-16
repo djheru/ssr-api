@@ -44,7 +44,12 @@
     "babel:watch": "babel ./src -s -D -d ./dist --watch",
     "watch": "npm-run-all clean babel:watch",
     "build": "npm-run-all clean babel",
-    "serve": "DEBUG=* NODE_ENV=development node ./dist/index.js",
-    "start": "npm-run-all build serve"
+    "serve": "DEBUG=app:* NODE_ENV=development node ./dist/index.js",
+    "start": "npm-run-all build serve",
+    "pm2:dev": "pm2 start app.dev.json",
+    "dev": "npm-run-all --parallel pm2:dev babel:watch logs",
+    "stop": "pm2 stop ssr-api-dev",
+    "monit": "pm2 monit",
+    "logs": "pm2 logs"
   }
 }
