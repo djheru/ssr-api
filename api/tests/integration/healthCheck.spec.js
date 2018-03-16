@@ -15,7 +15,6 @@ describe('(Health Check)', () => {
       .request(server)
       .get('/health-check')
       .send();
-    console.log(res);
     expect(res.status).to.equal(200);
   });
 });
