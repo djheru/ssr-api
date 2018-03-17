@@ -5,7 +5,7 @@ import logger from '../utils/logger';
 // Models to expose as resources
 import Todo from './todo';
 
-const apiRouter = express.Router(); // eslint-disable-line new-cap
+const apiRouter = express.Router();
 const log = logger.log('app:api');
 
 /**
