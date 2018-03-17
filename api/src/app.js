@@ -7,6 +7,7 @@ import { initializeMiddleware } from './middleware/index';
 import { initializeAuth } from './services/auth';
 import { initializeAuthRoutes } from './routes/auth';
 import { initializePublicRoutes } from './routes/public';
+import { initializeApi } from './resources/index';
 
 const log = logger.log('app:server');
 
@@ -24,6 +25,7 @@ async function initializeApplication() {
   initializeAuth(app);
   initializeAuthRoutes(app);
   initializePublicRoutes(app);
+  initializeApi(app);
 
   return app;
 }
