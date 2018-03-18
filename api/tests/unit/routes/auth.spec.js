@@ -75,11 +75,4 @@ describe('(Auth Routes)', () => {
     expect(logoutStub).to.be.called;
     expect(appStub.get).to.be.calledWith('/logout', logoutStub());
   });
-
-  it('should register the route "/current-user"', () => {
-    initializeAuthRoutesProxy(appStub);
-    expectRouteIsRegistered(appStub.get, '/current-user');
-    expect(currentUserStub).to.be.called;
-    expect(appStub.get).to.be.calledWith('/current-user', currentUserStub());
-  });
 });

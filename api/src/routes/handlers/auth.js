@@ -19,7 +19,3 @@ export const logout = (route = '/') => (req, res) => {
   req.logout();
   res.redirect(route);
 };
-
-export const currentUser = () => (req, res) => {
-  res.json(req.user || {});
-};
