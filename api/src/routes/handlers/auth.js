@@ -1,15 +1,18 @@
 import passport from 'passport';
-import { googlePermissionOptions } from '../../services/auth';
-
-export const authenticate = () =>
-  passport.authenticate('google', googlePermissionOptions);
 
 export const authCallback = () =>
-  passport.authenticate('google');
+  passport.authenticate('google', {
+    failureRedirect: '/',
+    session: false
+  });
 
 export const redirect = (route = '/') =>
   (req, res) => {
-    res.redirect(route);
+    res
+      .cookie('tempUserId', req.user._id, { maxAge: 10000 })
+      .cookie('tempToken', req.user.authToken)
+      .status(200)
+      .redirect(route);
   };
 
 export const logout = (route = '/') => (req, res) => {

@@ -15,7 +15,8 @@ describe('(Auth Service)', () => {
     execStub = { exec: sinon.stub() };
     userStub = {
       findById: sinon.stub(),
-      findOrCreateSocial: sinon.stub()
+      findOrCreateSocial: sinon.stub(),
+      validateToken: sinon.stub()
     };
     userStub.findById.returns(execStub);
     mongooseStub = {
