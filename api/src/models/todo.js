@@ -8,7 +8,7 @@ const todoSchema = new Schema({
   dueDate: { type: Date, required: false },
   user: { type: Schema.Types.ObjectId, ref: 'User' },
   isComplete: { type: Boolean, default: false },
-  tasks: { type: [String] },
+  tasks: { type: [{ type: Schema.Types.ObjectId, ref: 'Todo' }] },
   priority: { type: Number, default: 0 }
 }, {
   id: false,

@@ -69,29 +69,10 @@ describe('(Auth Routes)', () => {
     expect(appStub.get).to.be.calledWith('/auth/google/callback', authCallbackStub(), redirectStub());
   });
 
-  it('should register the route "/api/auth/google/callback"', () => {
-    initializeAuthRoutesProxy(appStub);
-    expectRouteIsRegistered(appStub.get, '/api/auth/google/callback');
-  });
-
-  it('should register the passport authentication middleware and redirect handler', () => {
-    initializeAuthRoutesProxy(appStub);
-    expect(authCallbackStub).to.be.called;
-    expect(redirectStub).to.be.called;
-    expect(appStub.get).to.be.calledWith('/api/auth/google/callback', authCallbackStub(), redirectStub());
-  });
-
   it('should register the route "/logout"', () => {
     initializeAuthRoutesProxy(appStub);
     expectRouteIsRegistered(appStub.get, '/logout');
     expect(logoutStub).to.be.called;
     expect(appStub.get).to.be.calledWith('/logout', logoutStub());
-  });
-
-  it('should register the route "/current-user"', () => {
-    initializeAuthRoutesProxy(appStub);
-    expectRouteIsRegistered(appStub.get, '/current-user');
-    expect(currentUserStub).to.be.called;
-    expect(appStub.get).to.be.calledWith('/current-user', currentUserStub());
   });
 });

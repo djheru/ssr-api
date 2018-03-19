@@ -3,6 +3,7 @@ import proxyquire from 'proxyquire';
 
 // Resources
 import Todo from '../../../src/resources/todo';
+import User from '../../../src/resources/user';
 
 describe('(Resources)', () => {
   let initializeApiProxy;
@@ -39,6 +40,7 @@ describe('(Resources)', () => {
   it('should use restify, express Router and the mongoose model to serve up the resources', () => {
     initializeApiProxy(appStub);
     expect(restifyStub.serve).to.be.calledWith(expressStub.Router(), Todo.model, Todo.options);
+    expect(restifyStub.serve).to.be.calledWith(expressStub.Router(), User.model, User.options);
   });
 
   it('should mount the resources at the "/api" route', () => {

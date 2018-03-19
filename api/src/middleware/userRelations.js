@@ -65,3 +65,12 @@ export function requireUser(req, res, next) {
   }
   return next();
 }
+
+/**
+ * You're not allowed to do that yo
+ * @param req
+ * @param res
+ */
+export function forbidden(req, res) {
+  res.sendStatus(403);
+}
