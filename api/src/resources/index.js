@@ -18,8 +18,9 @@ export function initializeApi(app) {
 
   Object.keys(resources)
     .forEach((resourceName) => {
+      log(`Mounting API Resource: ${resourceName}`);
+
       const resource = resources[resourceName];
-      log(`Initializing API Resource: ${resourceName}`);
       restify.serve(apiRouter, resource.model, resource.options);
     });
 

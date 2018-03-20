@@ -14,14 +14,14 @@ app.use('/api', proxy('http://localhost:8000', {
     opts.headers['x-forwarded-host'] = 'localhost:3000';
     return opts;
   },
-  proxyReqPathResolver: (req) => `/api/${url.parse(req.url).path}`
+  proxyReqPathResolver: (req) => `/api${url.parse(req.url).path}`
 }));
 app.use('/auth', proxy('http://localhost:8000', {
   proxyReqOptDecorator(opts) {
     opts.headers['x-forwarded-host'] = 'localhost:3000';
     return opts;
   },
-  proxyReqPathResolver: (req) => `/auth/${url.parse(req.url).path}`
+  proxyReqPathResolver: (req) => `/auth${url.parse(req.url).path}`
 }));
 
 app.use(morgan('dev', {

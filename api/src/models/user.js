@@ -52,9 +52,8 @@ userSchema.statics.findOrCreateSocial = async function findOrCreateSocial(userOb
       user[userField] = userData[userField];
     });
   }
-  const newOrExistingUser = (user) || new User(userData);
-  const saved = await newOrExistingUser.save();
-  return saved;
+  const newOrExistingUser = user || new User(userData);
+  return await newOrExistingUser.save();
   } catch (e) {
     log(e.message);
   }

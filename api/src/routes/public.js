@@ -1,14 +1,6 @@
-import npmConfig from '../../package.json';
+import { healthCheck, rootRoute } from '../handlers/public';
 
 export const initializePublicRoutes = (app) => {
-  app.get('/health-check', (req, res) => {
-    res.json({
-      status: 'ok',
-      version: npmConfig.version
-    });
-  });
-
-  app.get('/', (req, res) => {
-    res.json({ status: 'ohai!' });
-  });
+  app.get('/health-check', healthCheck);
+  app.get('/', rootRoute);
 };

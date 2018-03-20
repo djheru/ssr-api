@@ -305,7 +305,7 @@ app.use('/api', (0, _expressHttpProxy2.default)('http://localhost:8000', {
   },
 
   proxyReqPathResolver: function proxyReqPathResolver(req) {
-    return '/api/' + _url2.default.parse(req.url).path;
+    return '/api' + _url2.default.parse(req.url).path;
   }
 }));
 app.use('/auth', (0, _expressHttpProxy2.default)('http://localhost:8000', {
@@ -315,7 +315,7 @@ app.use('/auth', (0, _expressHttpProxy2.default)('http://localhost:8000', {
   },
 
   proxyReqPathResolver: function proxyReqPathResolver(req) {
-    return '/auth/' + _url2.default.parse(req.url).path;
+    return '/auth' + _url2.default.parse(req.url).path;
   }
 }));
 

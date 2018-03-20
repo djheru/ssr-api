@@ -1,9 +1,10 @@
 import mongoose from 'mongoose';
 import { addResultToUser, addUserToBody, requireUser, restrictToUser } from '../middleware/userRelations';
-
 import logger from '../utils/logger';
+
 const log = logger.log('app:api:todo');
 log('Initializing Todo resource');
+
 export default {
   model: mongoose.model('Todo'),
   options: {// express-restify-mongoose options

@@ -1,5 +1,5 @@
 import passport from 'passport';
-import { googlePermissionOptions } from '../../services/auth';
+import { googlePermissionOptions } from '../services/auth';
 
 export const authenticate = () =>
   passport.authenticate('google', googlePermissionOptions);
