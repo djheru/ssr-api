@@ -23,7 +23,8 @@ const googleConfig = {
   clientID: GOOGLE_CLIENT_ID,
   clientSecret: GOOGLE_CLIENT_SECRET,
   callbackURL: '/auth/google/callback',
-  options: googlePermissionOptions
+  options: googlePermissionOptions,
+  proxy: true
 };
 
 const serializeUser = (user, done) => {

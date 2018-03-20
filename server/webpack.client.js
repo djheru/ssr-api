@@ -5,6 +5,7 @@ const baseConfig = require('./webpack.base');
 const config = {
   // Server entry point
   entry: './src/client/index.js',
+  devtool: 'source-map',
 
   // output options
   output: {

@@ -9,6 +9,7 @@ export const authCallback = () =>
 
 export const redirect = (route = '/') =>
   (req, res) => {
+    console.log('host', req.get('x-forwarded-host'));
     res.redirect(route);
   };
 
