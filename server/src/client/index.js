@@ -1,7 +1,7 @@
 import 'babel-polyfill';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { createStore, applyMiddleware } from 'redux';
+import { createStore, applyMiddleware, compose } from 'redux';
 import thunk from 'redux-thunk';
 import { Provider } from 'react-redux';
 import { renderRoutes } from 'react-router-config'
@@ -11,10 +11,12 @@ import reducers from './reducers';
 import routes from './routes';
 
 const httpClient = axios.create({
-  baseURL: '/api'
+  baseURL: '/api/v1'
 });
 
-const store = createStore(reducers, window.INITIAL_STATE || {}, applyMiddleware(thunk.withExtraArgument(httpClient)));
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+const middleware = applyMiddleware(thunk.withExtraArgument(httpClient));
+const store = createStore(reducers, window.INITIAL_STATE || {}, composeEnhancers(middleware));
 
 const browserRouter = (
   <Provider store={ store }>

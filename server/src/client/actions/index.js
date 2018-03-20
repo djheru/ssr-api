@@ -6,10 +6,9 @@ actions.FETCH_CURRENT_USER = {
   FAILURE: 'fetch-current-user-failure'
 };
 export const fetchCurrentUser = () => async (dispatch, getState, httpClient) => {
-  console.log('fetchCurrentUser');
   try {
     const type = actions.FETCH_CURRENT_USER.SUCCESS;
-    const { data: payload } = await httpClient.get('/api/v1/user');
+    const { data: payload } = await httpClient.get('/user');
     dispatch({ type, payload });
   } catch (e) {
     dispatch({
@@ -25,10 +24,9 @@ actions.FETCH_TODOS = {
   FAILURE: 'fetch-todos-failure'
 };
 export const fetchTodos = () => async (dispatch, getState, httpClient) => {
-  console.log('fetchTodos');
   try {
     const type = actions.FETCH_TODOS.SUCCESS;
-    const { data: payload } = await httpClient.get('/api/v1/todo');
+    const { data: payload } = await httpClient.get('/todo');
     dispatch({ type, payload });
   } catch (e) {
     dispatch({

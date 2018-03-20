@@ -98,35 +98,34 @@ var fetchCurrentUser = exports.fetchCurrentUser = function fetchCurrentUser() {
         while (1) {
           switch (_context.prev = _context.next) {
             case 0:
-              console.log('fetchCurrentUser');
-              _context.prev = 1;
+              _context.prev = 0;
               type = actions.FETCH_CURRENT_USER.SUCCESS;
-              _context.next = 5;
-              return httpClient.get('/api/v1/user');
+              _context.next = 4;
+              return httpClient.get('/user');
 
-            case 5:
+            case 4:
               _ref2 = _context.sent;
               payload = _ref2.data;
 
               dispatch({ type: type, payload: payload });
-              _context.next = 13;
+              _context.next = 12;
               break;
 
-            case 10:
-              _context.prev = 10;
-              _context.t0 = _context['catch'](1);
+            case 9:
+              _context.prev = 9;
+              _context.t0 = _context['catch'](0);
 
               dispatch({
                 type: actions.FETCH_CURRENT_USER.FAILURE,
                 payload: _context.t0
               });
 
-            case 13:
+            case 12:
             case 'end':
               return _context.stop();
           }
         }
-      }, _callee, undefined, [[1, 10]]);
+      }, _callee, undefined, [[0, 9]]);
     }));
 
     return function (_x, _x2, _x3) {
@@ -149,35 +148,34 @@ var fetchTodos = exports.fetchTodos = function fetchTodos() {
         while (1) {
           switch (_context2.prev = _context2.next) {
             case 0:
-              console.log('fetchTodos');
-              _context2.prev = 1;
+              _context2.prev = 0;
               type = actions.FETCH_TODOS.SUCCESS;
-              _context2.next = 5;
-              return httpClient.get('/api/v1/todo');
+              _context2.next = 4;
+              return httpClient.get('/todo');
 
-            case 5:
+            case 4:
               _ref4 = _context2.sent;
               payload = _ref4.data;
 
               dispatch({ type: type, payload: payload });
-              _context2.next = 13;
+              _context2.next = 12;
               break;
 
-            case 10:
-              _context2.prev = 10;
-              _context2.t0 = _context2['catch'](1);
+            case 9:
+              _context2.prev = 9;
+              _context2.t0 = _context2['catch'](0);
 
               dispatch({
                 type: actions.FETCH_TODOS.FAILURE,
                 payload: _context2.t0
               });
 
-            case 13:
+            case 12:
             case 'end':
               return _context2.stop();
           }
         }
-      }, _callee2, undefined, [[1, 10]]);
+      }, _callee2, undefined, [[0, 9]]);
     }));
 
     return function (_x4, _x5, _x6) {
@@ -223,19 +221,19 @@ var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _App = __webpack_require__(11);
+var _App = __webpack_require__(12);
 
 var _App2 = _interopRequireDefault(_App);
 
-var _NotFoundPage = __webpack_require__(13);
+var _NotFoundPage = __webpack_require__(14);
 
 var _NotFoundPage2 = _interopRequireDefault(_NotFoundPage);
 
-var _HomePage = __webpack_require__(14);
+var _HomePage = __webpack_require__(15);
 
 var _HomePage2 = _interopRequireDefault(_HomePage);
 
-var _TodosPage = __webpack_require__(15);
+var _TodosPage = __webpack_require__(16);
 
 var _TodosPage2 = _interopRequireDefault(_TodosPage);
 
@@ -273,21 +271,25 @@ var _express = __webpack_require__(10);
 
 var _express2 = _interopRequireDefault(_express);
 
+var _morgan = __webpack_require__(11);
+
+var _morgan2 = _interopRequireDefault(_morgan);
+
 var _reactRouterConfig = __webpack_require__(3);
 
 var _routes = __webpack_require__(5);
 
 var _routes2 = _interopRequireDefault(_routes);
 
-var _renderMarkup = __webpack_require__(17);
+var _renderMarkup = __webpack_require__(18);
 
 var _renderMarkup2 = _interopRequireDefault(_renderMarkup);
 
-var _createStore = __webpack_require__(21);
+var _createStore = __webpack_require__(22);
 
 var _createStore2 = _interopRequireDefault(_createStore);
 
-var _url = __webpack_require__(27);
+var _url = __webpack_require__(28);
 
 var _url2 = _interopRequireDefault(_url);
 
@@ -301,8 +303,9 @@ app.use('/api', (0, _expressHttpProxy2.default)('http://localhost:8000', {
     opts.headers['x-forwarded-host'] = 'localhost:3000';
     return opts;
   },
+
   proxyReqPathResolver: function proxyReqPathResolver(req) {
-    return _url2.default.parse(req.url).path;
+    return '/api/' + _url2.default.parse(req.url).path;
   }
 }));
 app.use('/auth', (0, _expressHttpProxy2.default)('http://localhost:8000', {
@@ -310,8 +313,15 @@ app.use('/auth', (0, _expressHttpProxy2.default)('http://localhost:8000', {
     opts.headers['x-forwarded-host'] = 'localhost:3000';
     return opts;
   },
+
   proxyReqPathResolver: function proxyReqPathResolver(req) {
-    return _url2.default.parse(req.url).path;
+    return '/auth/' + _url2.default.parse(req.url).path;
+  }
+}));
+
+app.use((0, _morgan2.default)('dev', {
+  skip: function skip() {
+    return app.get('env') === 'test';
   }
 }));
 
@@ -328,8 +338,6 @@ app.get('*', function () {
             context = {};
             _context.prev = 2;
             matchedRoutes = (0, _reactRouterConfig.matchRoutes)(_routes2.default, req.path);
-
-            console.log('matchedRoutes', matchedRoutes);
             promises = matchedRoutes.map(function (_ref2) {
               var _ref2$route$loadData = _ref2.route.loadData,
                   loadData = _ref2$route$loadData === undefined ? false : _ref2$route$loadData;
@@ -341,42 +349,40 @@ app.get('*', function () {
                 });
               }
             });
-            _context.next = 8;
+            _context.next = 7;
             return Promise.all(promises);
 
-          case 8:
+          case 7:
             content = (0, _renderMarkup2.default)(req, store, context);
 
-            console.log(context);
-
             if (!context.url) {
-              _context.next = 12;
+              _context.next = 10;
               break;
             }
 
             return _context.abrupt('return', res.redirect(301, context.url));
 
-          case 12:
+          case 10:
             if (context.notFound) {
               // context is set by reference in the NotFoundPage
               res.status(404);
             }
             res.send(content);
-            _context.next = 19;
+            _context.next = 17;
             break;
 
-          case 16:
-            _context.prev = 16;
+          case 14:
+            _context.prev = 14;
             _context.t0 = _context['catch'](2);
 
             console.log(_context.t0.message);
 
-          case 19:
+          case 17:
           case 'end':
             return _context.stop();
         }
       }
-    }, _callee, undefined, [[2, 16]]);
+    }, _callee, undefined, [[2, 14]]);
   }));
 
   return function (_x, _x2) {
@@ -408,6 +414,12 @@ module.exports = require("express");
 
 /***/ }),
 /* 11 */
+/***/ (function(module, exports) {
+
+module.exports = require("morgan");
+
+/***/ }),
+/* 12 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -425,7 +437,7 @@ var _reactRouterConfig = __webpack_require__(3);
 
 var _index = __webpack_require__(1);
 
-var _Header = __webpack_require__(12);
+var _Header = __webpack_require__(13);
 
 var _Header2 = _interopRequireDefault(_Header);
 
@@ -451,7 +463,7 @@ exports.default = {
 };
 
 /***/ }),
-/* 12 */
+/* 13 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -473,8 +485,6 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var Header = function Header(_ref) {
   var auth = _ref.auth;
-
-  console.log('auth: ', auth);
 
   var authButton = auth ? _react2.default.createElement(
     'a',
@@ -527,7 +537,7 @@ var mapStateToProps = function mapStateToProps(_ref2) {
 exports.default = (0, _reactRedux.connect)(mapStateToProps)(Header);
 
 /***/ }),
-/* 13 */
+/* 14 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -563,7 +573,7 @@ var NotFound = function NotFound(_ref) {
 exports.default = { component: NotFound };
 
 /***/ }),
-/* 14 */
+/* 15 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -599,7 +609,7 @@ var Home = function Home() {
 exports.default = { component: Home };
 
 /***/ }),
-/* 15 */
+/* 16 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -619,7 +629,7 @@ var _reactRedux = __webpack_require__(2);
 
 var _actions = __webpack_require__(1);
 
-var _requireAuth = __webpack_require__(16);
+var _requireAuth = __webpack_require__(17);
 
 var _requireAuth2 = _interopRequireDefault(_requireAuth);
 
@@ -685,9 +695,9 @@ var TodosPage = function (_Component) {
 
 
 var mapStateToProps = function mapStateToProps(state) {
-  console.log(state);
   return { todos: state.todos || [] };
 };
+
 exports.default = {
   component: (0, _reactRedux.connect)(mapStateToProps, { fetchTodos: _actions.fetchTodos })((0, _requireAuth2.default)(TodosPage)),
   loadData: function loadData(_ref2) {
@@ -697,7 +707,7 @@ exports.default = {
 };
 
 /***/ }),
-/* 16 */
+/* 17 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -765,7 +775,7 @@ exports.default = function (ChildComponent) {
 };
 
 /***/ }),
-/* 17 */
+/* 18 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -780,15 +790,15 @@ var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _server = __webpack_require__(18);
+var _server = __webpack_require__(19);
 
 var _reactRouterDom = __webpack_require__(4);
 
 var _reactRedux = __webpack_require__(2);
 
-var _reactHelmet = __webpack_require__(19);
+var _reactHelmet = __webpack_require__(20);
 
-var _serializeJavascript = __webpack_require__(20);
+var _serializeJavascript = __webpack_require__(21);
 
 var _serializeJavascript2 = _interopRequireDefault(_serializeJavascript);
 
@@ -824,25 +834,25 @@ function rendereMarkup(_ref, store, context) {
 }
 
 /***/ }),
-/* 18 */
+/* 19 */
 /***/ (function(module, exports) {
 
 module.exports = require("react-dom/server");
 
 /***/ }),
-/* 19 */
+/* 20 */
 /***/ (function(module, exports) {
 
 module.exports = require("react-helmet");
 
 /***/ }),
-/* 20 */
+/* 21 */
 /***/ (function(module, exports) {
 
 module.exports = require("serialize-javascript");
 
 /***/ }),
-/* 21 */
+/* 22 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -854,15 +864,15 @@ Object.defineProperty(exports, "__esModule", {
 
 var _redux = __webpack_require__(6);
 
-var _reduxThunk = __webpack_require__(22);
+var _reduxThunk = __webpack_require__(23);
 
 var _reduxThunk2 = _interopRequireDefault(_reduxThunk);
 
-var _axios = __webpack_require__(23);
+var _axios = __webpack_require__(24);
 
 var _axios2 = _interopRequireDefault(_axios);
 
-var _reducers = __webpack_require__(24);
+var _reducers = __webpack_require__(25);
 
 var _reducers2 = _interopRequireDefault(_reducers);
 
@@ -873,7 +883,7 @@ var PROTOCOL = process.env.PROTOCOL || 'http';
 
 exports.default = function (req) {
   var serverHttpClient = _axios2.default.create({
-    baseURL: PROTOCOL + '://' + HOST,
+    baseURL: PROTOCOL + '://' + HOST + '/api/v1',
     headers: { cookie: req.get('cookie') || '' }
   });
 
@@ -882,19 +892,19 @@ exports.default = function (req) {
 };
 
 /***/ }),
-/* 22 */
+/* 23 */
 /***/ (function(module, exports) {
 
 module.exports = require("redux-thunk");
 
 /***/ }),
-/* 23 */
+/* 24 */
 /***/ (function(module, exports) {
 
 module.exports = require("axios");
 
 /***/ }),
-/* 24 */
+/* 25 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -906,11 +916,11 @@ Object.defineProperty(exports, "__esModule", {
 
 var _redux = __webpack_require__(6);
 
-var _authReducer = __webpack_require__(25);
+var _authReducer = __webpack_require__(26);
 
 var _authReducer2 = _interopRequireDefault(_authReducer);
 
-var _todosReducer = __webpack_require__(26);
+var _todosReducer = __webpack_require__(27);
 
 var _todosReducer2 = _interopRequireDefault(_todosReducer);
 
@@ -922,7 +932,7 @@ exports.default = (0, _redux.combineReducers)({
 });
 
 /***/ }),
-/* 25 */
+/* 26 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -937,7 +947,6 @@ exports.default = function () {
   var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
   var action = arguments[1];
 
-  console.log(action);
   switch (action.type) {
     case _actions2.default.FETCH_CURRENT_USER.SUCCESS:
       return fetchCurrentUserReducer(state, action);
@@ -959,12 +968,11 @@ var fetchCurrentUserReducer = exports.fetchCurrentUserReducer = function fetchCu
   var _ref = arguments[1];
   var payload = _ref.payload;
 
-  console.log('ohai', state, payload);
   return payload ? payload[0] : false;
 };
 
 /***/ }),
-/* 26 */
+/* 27 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1000,7 +1008,7 @@ var fetchTodosReducer = exports.fetchTodosReducer = function fetchTodosReducer(_
 };
 
 /***/ }),
-/* 27 */
+/* 28 */
 /***/ (function(module, exports) {
 
 module.exports = require("url");

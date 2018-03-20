@@ -24,9 +24,9 @@ class TodosPage extends Component {
 
 // const mapStateToProps = ({ todos }) => ({ todos });
 const mapStateToProps = (state) => {
-  console.log(state);
   return {todos: state.todos || []};
-}
+};
+
 export default {
   component: connect(mapStateToProps, { fetchTodos })(requireAuth(TodosPage)),
   loadData: ({ dispatch }) => dispatch(fetchTodos())

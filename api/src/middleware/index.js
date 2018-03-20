@@ -1,6 +1,7 @@
 import cookieSession from 'cookie-session';
 import bodyParser from 'body-parser';
 import cors from 'cors';
+import morgan from 'morgan';
 
 const { COOKIE_KEY } = process.env;
 
@@ -18,4 +19,7 @@ export function initializeMiddleware(app) {
       keys: [COOKIE_KEY]
     })
   );
+  app.use(morgan('dev', {
+    skip: () => app.get('env') === 'test'
+  }));
 }

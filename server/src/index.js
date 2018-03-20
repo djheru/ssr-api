@@ -1,6 +1,7 @@
 import 'babel-polyfill';
 import proxy from 'express-http-proxy';
 import express from 'express';
+import morgan from 'morgan';
 import { matchRoutes } from 'react-router-config';
 import routes from './client/routes';
 import renderer from './renderMarkup';
@@ -13,18 +14,18 @@ app.use('/api', proxy('http://localhost:8000', {
     opts.headers['x-forwarded-host'] = 'localhost:3000';
     return opts;
   },
-  proxyReqPathResolver(req) {
-    return url.parse(req.url).path;
-  }
+  proxyReqPathResolver: (req) => `/api/${url.parse(req.url).path}`
 }));
 app.use('/auth', proxy('http://localhost:8000', {
   proxyReqOptDecorator(opts) {
     opts.headers['x-forwarded-host'] = 'localhost:3000';
     return opts;
   },
-  proxyReqPathResolver(req) {
-    return url.parse(req.url).path;
-  }
+  proxyReqPathResolver: (req) => `/auth/${url.parse(req.url).path}`
+}));
+
+app.use(morgan('dev', {
+  skip: () => app.get('env') === 'test'
 }));
 
 app.use(express.static('public'));
@@ -35,7 +36,6 @@ app.get('*', async (req, res) => {
 
   try {
     const matchedRoutes = matchRoutes(routes, req.path);
-    console.log('matchedRoutes', matchedRoutes);
     const promises = matchedRoutes
       .map(({ route: { loadData = false } }) => (loadData ? loadData(store) : null))
       .map(promise => {
@@ -47,7 +47,6 @@ app.get('*', async (req, res) => {
       });
     await Promise.all(promises);
     const content = renderer(req, store, context);
-    console.log(context);
     if (context.url) {
       return res.redirect(301, context.url);
     }

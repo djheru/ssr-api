@@ -3091,35 +3091,34 @@ var fetchCurrentUser = exports.fetchCurrentUser = function fetchCurrentUser() {
         while (1) {
           switch (_context.prev = _context.next) {
             case 0:
-              console.log('fetchCurrentUser');
-              _context.prev = 1;
+              _context.prev = 0;
               type = actions.FETCH_CURRENT_USER.SUCCESS;
-              _context.next = 5;
-              return httpClient.get('/api/v1/user');
+              _context.next = 4;
+              return httpClient.get('/user');
 
-            case 5:
+            case 4:
               _ref2 = _context.sent;
               payload = _ref2.data;
 
               dispatch({ type: type, payload: payload });
-              _context.next = 13;
+              _context.next = 12;
               break;
 
-            case 10:
-              _context.prev = 10;
-              _context.t0 = _context['catch'](1);
+            case 9:
+              _context.prev = 9;
+              _context.t0 = _context['catch'](0);
 
               dispatch({
                 type: actions.FETCH_CURRENT_USER.FAILURE,
                 payload: _context.t0
               });
 
-            case 13:
+            case 12:
             case 'end':
               return _context.stop();
           }
         }
-      }, _callee, undefined, [[1, 10]]);
+      }, _callee, undefined, [[0, 9]]);
     }));
 
     return function (_x, _x2, _x3) {
@@ -3142,35 +3141,34 @@ var fetchTodos = exports.fetchTodos = function fetchTodos() {
         while (1) {
           switch (_context2.prev = _context2.next) {
             case 0:
-              console.log('fetchTodos');
-              _context2.prev = 1;
+              _context2.prev = 0;
               type = actions.FETCH_TODOS.SUCCESS;
-              _context2.next = 5;
-              return httpClient.get('/api/v1/todo');
+              _context2.next = 4;
+              return httpClient.get('/todo');
 
-            case 5:
+            case 4:
               _ref4 = _context2.sent;
               payload = _ref4.data;
 
               dispatch({ type: type, payload: payload });
-              _context2.next = 13;
+              _context2.next = 12;
               break;
 
-            case 10:
-              _context2.prev = 10;
-              _context2.t0 = _context2['catch'](1);
+            case 9:
+              _context2.prev = 9;
+              _context2.t0 = _context2['catch'](0);
 
               dispatch({
                 type: actions.FETCH_TODOS.FAILURE,
                 payload: _context2.t0
               });
 
-            case 13:
+            case 12:
             case 'end':
               return _context2.stop();
           }
         }
-      }, _callee2, undefined, [[1, 10]]);
+      }, _callee2, undefined, [[0, 9]]);
     }));
 
     return function (_x4, _x5, _x6) {
@@ -8383,10 +8381,12 @@ var _routes2 = _interopRequireDefault(_routes);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var httpClient = _axios2.default.create({
-  baseURL: '/api'
+  baseURL: '/api/v1'
 });
 
-var store = (0, _redux.createStore)(_reducers2.default, window.INITIAL_STATE || {}, (0, _redux.applyMiddleware)(_reduxThunk2.default.withExtraArgument(httpClient)));
+var composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || _redux.compose;
+var middleware = (0, _redux.applyMiddleware)(_reduxThunk2.default.withExtraArgument(httpClient));
+var store = (0, _redux.createStore)(_reducers2.default, window.INITIAL_STATE || {}, composeEnhancers(middleware));
 
 var browserRouter = _react2.default.createElement(
   _reactRedux.Provider,
@@ -38952,7 +38952,6 @@ exports.default = function () {
   var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
   var action = arguments[1];
 
-  console.log(action);
   switch (action.type) {
     case _actions2.default.FETCH_CURRENT_USER.SUCCESS:
       return fetchCurrentUserReducer(state, action);
@@ -38974,7 +38973,6 @@ var fetchCurrentUserReducer = exports.fetchCurrentUserReducer = function fetchCu
   var _ref = arguments[1];
   var payload = _ref.payload;
 
-  console.log('ohai', state, payload);
   return payload ? payload[0] : false;
 };
 
@@ -39125,8 +39123,6 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var Header = function Header(_ref) {
   var auth = _ref.auth;
-
-  console.log('auth: ', auth);
 
   var authButton = auth ? _react2.default.createElement(
     'a',
@@ -39337,9 +39333,9 @@ var TodosPage = function (_Component) {
 
 
 var mapStateToProps = function mapStateToProps(state) {
-  console.log(state);
   return { todos: state.todos || [] };
 };
+
 exports.default = {
   component: (0, _reactRedux.connect)(mapStateToProps, { fetchTodos: _actions.fetchTodos })((0, _requireAuth2.default)(TodosPage)),
   loadData: function loadData(_ref2) {

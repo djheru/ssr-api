@@ -5,7 +5,10 @@
       "script": "dist/index.js",
       "watch":  [
         "dist"
-      ]
+      ],
+      "env": {
+        "DEBUG": "app:*"
+      }
     }
   ]
 }

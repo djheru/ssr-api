@@ -17,6 +17,7 @@
     "ip": "^1.1.5",
     "moment": "^2.21.0",
     "mongoose": "^5.0.10",
+    "morgan": "^1.9.0",
     "passport": "^0.4.0",
     "passport-google-oauth20": "^1.0.0"
   },
@@ -47,7 +48,8 @@
     "build": "npm-run-all clean babel",
     "serve": "DEBUG=app:* NODE_ENV=development node ./dist/index.js",
     "start": "npm-run-all build serve",
-    "pm2:dev": "pm2 start app.dev.json",
+    "pm2": "pm2 start app.dev.json",
+    "pm2:dev": "npm-run-all build pm2",
     "dev": "npm-run-all --parallel pm2:dev babel:watch logs",
     "stop": "pm2 stop ssr-api-dev",
     "monit": "pm2 monit",

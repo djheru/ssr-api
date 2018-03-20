@@ -8,7 +8,7 @@ const PROTOCOL = process.env.PROTOCOL || 'http';
 
 export default (req) => {
   const serverHttpClient = axios.create({
-    baseURL: `${PROTOCOL}://${HOST}`,
+    baseURL: `${PROTOCOL}://${HOST}/api/v1`,
     headers: { cookie: req.get('cookie') || '' }
   });
 
