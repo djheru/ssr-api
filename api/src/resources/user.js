@@ -4,7 +4,7 @@ import { requireUser, restrictToUser, forbidden } from '../middleware/userRelati
 import logger from '../utils/logger';
 
 const log = logger.log('app:api:user');
-log('Initializing User resource');
+log('Initializing User Resource');
 
 export default {
   model: mongoose.model('User'),

@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 7);
+/******/ 	return __webpack_require__(__webpack_require__.s = 9);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -71,6 +71,72 @@ module.exports = require("react");
 
 /***/ }),
 /* 1 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _chalk = __webpack_require__(13);
+
+var _chalk2 = _interopRequireDefault(_chalk);
+
+var _ip = __webpack_require__(14);
+
+var _ip2 = _interopRequireDefault(_ip);
+
+var _debug = __webpack_require__(15);
+
+var _debug2 = _interopRequireDefault(_debug);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var divider = _chalk2.default.gray('\n-----------------------------------'); /* eslint-disable no-console */
+
+
+var logger = {
+  // Called whenever there's an error on the server we want to print
+  error: function error(err) {
+    console.error(_chalk2.default.red(err));
+  },
+  appStarted: function appStarted(port, host) {
+    var log = this.log();
+    log('Server started ! ' + _chalk2.default.green('✓'));
+
+    var localhostUri = 'http://' + host + ':' + port;
+    var lanUri = 'http://' + _ip2.default.address() + ':' + port;
+
+    var message = '' + _chalk2.default.bold('Access URLs:') + divider;
+    message += '\nLocalhost: ' + _chalk2.default.magenta(localhostUri);
+    message += '\n      Lan: ' + _chalk2.default.magenta(lanUri) + divider;
+    message += '\n' + _chalk2.default.blue('Press ' + _chalk2.default.italic('CTRL-C') + ' to stop') + '\n';
+    log(message);
+  },
+  log: function log() {
+    var logNamespace = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'app:logger';
+
+    var log = (0, _debug2.default)(logNamespace);
+    log.log = console.log.bind(console);
+    return log;
+  },
+  border: function border(width) {
+    console.info('*'.repeat(width));
+  }
+};
+
+exports.default = logger;
+
+/***/ }),
+/* 2 */
+/***/ (function(module, exports) {
+
+module.exports = require("react-redux");
+
+/***/ }),
+/* 3 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -187,25 +253,25 @@ var fetchTodos = exports.fetchTodos = function fetchTodos() {
 exports.default = actions;
 
 /***/ }),
-/* 2 */
+/* 4 */
 /***/ (function(module, exports) {
 
-module.exports = require("react-redux");
+module.exports = require("express");
 
 /***/ }),
-/* 3 */
+/* 5 */
 /***/ (function(module, exports) {
 
 module.exports = require("react-router-config");
 
 /***/ }),
-/* 4 */
+/* 6 */
 /***/ (function(module, exports) {
 
 module.exports = require("react-router-dom");
 
 /***/ }),
-/* 5 */
+/* 7 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -221,19 +287,19 @@ var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _App = __webpack_require__(12);
+var _App = __webpack_require__(27);
 
 var _App2 = _interopRequireDefault(_App);
 
-var _NotFoundPage = __webpack_require__(14);
+var _NotFoundPage = __webpack_require__(29);
 
 var _NotFoundPage2 = _interopRequireDefault(_NotFoundPage);
 
-var _HomePage = __webpack_require__(15);
+var _HomePage = __webpack_require__(30);
 
 var _HomePage2 = _interopRequireDefault(_HomePage);
 
-var _TodosPage = __webpack_require__(16);
+var _TodosPage = __webpack_require__(31);
 
 var _TodosPage2 = _interopRequireDefault(_TodosPage);
 
@@ -249,85 +315,372 @@ exports.default = [_extends({}, _App2.default, {
 })];
 
 /***/ }),
-/* 6 */
+/* 8 */
 /***/ (function(module, exports) {
 
 module.exports = require("redux");
 
 /***/ }),
-/* 7 */
+/* 9 */
+/***/ (function(module, exports, __webpack_require__) {
+
+__webpack_require__(10);
+module.exports = __webpack_require__(11);
+
+
+/***/ }),
+/* 10 */
+/***/ (function(module, exports) {
+
+module.exports = require("babel-polyfill");
+
+/***/ }),
+/* 11 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-__webpack_require__(8);
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 
-var _expressHttpProxy = __webpack_require__(9);
+var main = function () {
+  var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
+    var _app;
 
-var _expressHttpProxy2 = _interopRequireDefault(_expressHttpProxy);
+    return regeneratorRuntime.wrap(function _callee$(_context) {
+      while (1) {
+        switch (_context.prev = _context.next) {
+          case 0:
+            _context.prev = 0;
 
-var _express = __webpack_require__(10);
+            log('Starting Server');
+            _context.next = 4;
+            return (0, _app3.default)();
 
-var _express2 = _interopRequireDefault(_express);
+          case 4:
+            _app = _context.sent;
 
-var _morgan = __webpack_require__(11);
+            _app.listen(PORT, HOST, function () {
+              return _logger2.default.appStarted(PORT, HOST);
+            });
+            return _context.abrupt('return', _app);
 
-var _morgan2 = _interopRequireDefault(_morgan);
+          case 9:
+            _context.prev = 9;
+            _context.t0 = _context['catch'](0);
 
-var _reactRouterConfig = __webpack_require__(3);
+            _logger2.default.error(_context.t0);
+            return _context.abrupt('return', false);
 
-var _routes = __webpack_require__(5);
+          case 13:
+          case 'end':
+            return _context.stop();
+        }
+      }
+    }, _callee, this, [[0, 9]]);
+  }));
 
-var _routes2 = _interopRequireDefault(_routes);
+  return function main() {
+    return _ref.apply(this, arguments);
+  };
+}();
 
-var _renderMarkup = __webpack_require__(18);
+var _app2 = __webpack_require__(12);
 
-var _renderMarkup2 = _interopRequireDefault(_renderMarkup);
+var _app3 = _interopRequireDefault(_app2);
 
-var _createStore = __webpack_require__(22);
+var _logger = __webpack_require__(1);
 
-var _createStore2 = _interopRequireDefault(_createStore);
-
-var _url = __webpack_require__(28);
-
-var _url2 = _interopRequireDefault(_url);
+var _logger2 = _interopRequireDefault(_logger);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
 
-var app = (0, _express2.default)();
-app.use('/api', (0, _expressHttpProxy2.default)('http://localhost:8000', {
-  proxyReqOptDecorator: function proxyReqOptDecorator(opts) {
-    opts.headers['x-forwarded-host'] = 'localhost:3000';
-    return opts;
-  },
+var log = _logger2.default.log('app:server');
 
-  proxyReqPathResolver: function proxyReqPathResolver(req) {
-    return '/api' + _url2.default.parse(req.url).path;
-  }
-}));
-app.use('/auth', (0, _expressHttpProxy2.default)('http://localhost:8000', {
-  proxyReqOptDecorator: function proxyReqOptDecorator(opts) {
-    opts.headers['x-forwarded-host'] = 'localhost:3000';
-    return opts;
-  },
+var _process$env = process.env,
+    _process$env$PORT = _process$env.PORT,
+    PORT = _process$env$PORT === undefined ? 3000 : _process$env$PORT,
+    _process$env$HOST = _process$env.HOST,
+    HOST = _process$env$HOST === undefined ? '0.0.0.0' : _process$env$HOST;
 
-  proxyReqPathResolver: function proxyReqPathResolver(req) {
-    return '/auth' + _url2.default.parse(req.url).path;
-  }
-}));
+log('Begin Application Startup');
 
-app.use((0, _morgan2.default)('dev', {
-  skip: function skip() {
-    return app.get('env') === 'test';
-  }
+var app = main();
+exports.default = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2() {
+  return regeneratorRuntime.wrap(function _callee2$(_context2) {
+    while (1) {
+      switch (_context2.prev = _context2.next) {
+        case 0:
+          return _context2.abrupt('return', app);
+
+        case 1:
+        case 'end':
+          return _context2.stop();
+      }
+    }
+  }, _callee2, undefined);
 }));
 
-app.use(_express2.default.static('public'));
+/***/ }),
+/* 12 */
+/***/ (function(module, exports, __webpack_require__) {
 
-app.get('*', function () {
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var initializeApplication = function () {
+  var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
+    var app;
+    return regeneratorRuntime.wrap(function _callee$(_context) {
+      while (1) {
+        switch (_context.prev = _context.next) {
+          case 0:
+            log('Initializing Application');
+
+            app = (0, _express2.default)();
+
+            (0, _middleware2.default)(app);
+            (0, _routes2.default)(app);
+
+            return _context.abrupt('return', app);
+
+          case 5:
+          case 'end':
+            return _context.stop();
+        }
+      }
+    }, _callee, this);
+  }));
+
+  return function initializeApplication() {
+    return _ref.apply(this, arguments);
+  };
+}();
+
+var _express = __webpack_require__(4);
+
+var _express2 = _interopRequireDefault(_express);
+
+var _logger = __webpack_require__(1);
+
+var _logger2 = _interopRequireDefault(_logger);
+
+var _middleware = __webpack_require__(16);
+
+var _middleware2 = _interopRequireDefault(_middleware);
+
+var _routes = __webpack_require__(18);
+
+var _routes2 = _interopRequireDefault(_routes);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
+
+var log = _logger2.default.log('app:server');
+
+exports.default = initializeApplication;
+
+/***/ }),
+/* 13 */
+/***/ (function(module, exports) {
+
+module.exports = require("chalk");
+
+/***/ }),
+/* 14 */
+/***/ (function(module, exports) {
+
+module.exports = require("ip");
+
+/***/ }),
+/* 15 */
+/***/ (function(module, exports) {
+
+module.exports = require("debug");
+
+/***/ }),
+/* 16 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = initializeMiddleware;
+
+var _express = __webpack_require__(4);
+
+var _express2 = _interopRequireDefault(_express);
+
+var _morgan = __webpack_require__(17);
+
+var _morgan2 = _interopRequireDefault(_morgan);
+
+var _logger = __webpack_require__(1);
+
+var _logger2 = _interopRequireDefault(_logger);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var log = _logger2.default.log('app:middleware');
+
+function initializeMiddleware(app) {
+  log('Initializing Middleware');
+  app.disable('x-powered-by');
+  app.use((0, _morgan2.default)('dev', { skip: function skip() {
+      return app.get('env') === 'test';
+    } }));
+  app.use(_express2.default.static('public'));
+}
+
+/***/ }),
+/* 17 */
+/***/ (function(module, exports) {
+
+module.exports = require("morgan");
+
+/***/ }),
+/* 18 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = initializeRoutes;
+
+var _express = __webpack_require__(4);
+
+var _express2 = _interopRequireDefault(_express);
+
+var _proxy = __webpack_require__(19);
+
+var _proxy2 = _interopRequireDefault(_proxy);
+
+var _handlers = __webpack_require__(22);
+
+var _handlers2 = _interopRequireDefault(_handlers);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function initializeDefaultRoutes(router) {
+  router.get('*', _handlers2.default);
+}
+
+function initializeRoutes(app) {
+  var router = _express2.default.Router();
+
+  (0, _proxy2.default)(router);
+  initializeDefaultRoutes(router);
+
+  app.use('/', router);
+}
+
+/***/ }),
+/* 19 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = initializeProxyRoutes;
+
+var _expressHttpProxy = __webpack_require__(20);
+
+var _expressHttpProxy2 = _interopRequireDefault(_expressHttpProxy);
+
+var _url = __webpack_require__(21);
+
+var _url2 = _interopRequireDefault(_url);
+
+var _logger = __webpack_require__(1);
+
+var _logger2 = _interopRequireDefault(_logger);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var log = _logger2.default.log('app:routes');
+
+var apiProxyHost = process.env.PROXY_HOST || 'http://localhost:8000';
+var authProxyHost = process.env.PROXY_HOST || 'http://localhost:8000';
+
+var proxyConfig = function proxyConfig(pathPrefix) {
+  return {
+    proxyReqOptDecorator: function proxyReqOptDecorator(opts) {
+      opts.headers['x-forwarded-host'] = 'localhost:3000';
+      return opts;
+    },
+
+    proxyReqPathResolver: function proxyReqPathResolver(req) {
+      return '' + pathPrefix + _url2.default.parse(req.url).path;
+    }
+  };
+};
+
+function initializeProxyRoutes(router) {
+  log('Initializing proxy routes');
+  router.use('/api', (0, _expressHttpProxy2.default)(apiProxyHost, proxyConfig('/api')));
+  router.use('/auth', (0, _expressHttpProxy2.default)(authProxyHost, proxyConfig('/auth')));
+}
+
+/***/ }),
+/* 20 */
+/***/ (function(module, exports) {
+
+module.exports = require("express-http-proxy");
+
+/***/ }),
+/* 21 */
+/***/ (function(module, exports) {
+
+module.exports = require("url");
+
+/***/ }),
+/* 22 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _reactRouterConfig = __webpack_require__(5);
+
+var _renderMarkup = __webpack_require__(23);
+
+var _renderMarkup2 = _interopRequireDefault(_renderMarkup);
+
+var _createStore = __webpack_require__(33);
+
+var _createStore2 = _interopRequireDefault(_createStore);
+
+var _routes = __webpack_require__(7);
+
+var _routes2 = _interopRequireDefault(_routes);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
+
+exports.default = function () {
   var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(req, res) {
     var store, context, matchedRoutes, promises, content;
     return regeneratorRuntime.wrap(function _callee$(_context) {
@@ -345,6 +698,7 @@ app.get('*', function () {
             }).map(function (promise) {
               if (promise) {
                 return new Promise(function (resolve) {
+                  // wrap the loadData functions in a promise and resolve no matter what
                   promise.then(resolve).catch(resolve);
                 });
               }
@@ -382,44 +736,95 @@ app.get('*', function () {
             return _context.stop();
         }
       }
-    }, _callee, undefined, [[2, 14]]);
+    }, _callee, this, [[2, 14]]);
   }));
 
-  return function (_x, _x2) {
+  function defaultRouteHandler(_x, _x2) {
     return _ref.apply(this, arguments);
-  };
-}());
+  }
 
-app.listen(3000, function () {
-  console.log('listening on port 3000');
+  return defaultRouteHandler;
+}();
+
+/***/ }),
+/* 23 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
 });
+exports.default = rendereMarkup;
+
+var _react = __webpack_require__(0);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _server = __webpack_require__(24);
+
+var _reactRouterDom = __webpack_require__(6);
+
+var _reactRedux = __webpack_require__(2);
+
+var _reactHelmet = __webpack_require__(25);
+
+var _serializeJavascript = __webpack_require__(26);
+
+var _serializeJavascript2 = _interopRequireDefault(_serializeJavascript);
+
+var _reactRouterConfig = __webpack_require__(5);
+
+var _routes = __webpack_require__(7);
+
+var _routes2 = _interopRequireDefault(_routes);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function rendereMarkup(_ref, store, context) {
+  var path = _ref.path;
+
+  var content = (0, _server.renderToString)(_react2.default.createElement(
+    _reactRedux.Provider,
+    { store: store },
+    _react2.default.createElement(
+      _reactRouterDom.StaticRouter,
+      { location: path, context: context },
+      _react2.default.createElement(
+        'div',
+        null,
+        (0, _reactRouterConfig.renderRoutes)(_routes2.default)
+      )
+    )
+  ));
+
+  var helmet = _reactHelmet.Helmet.renderStatic();
+  var initialState = store.getState();
+
+  return '\n<html>\n    <head>\n    ' + helmet.title.toString() + '\n    ' + helmet.meta.toString() + '\n    </head>\n    <body>\n      <div id="root">' + content + '</div>\n      <script>\n        window.INITIAL_STATE = ' + (0, _serializeJavascript2.default)(initialState) + '\n      </script>\n      <script src="bundle.js"></script>\n    </body>\n</html>\n';
+}
 
 /***/ }),
-/* 8 */
+/* 24 */
 /***/ (function(module, exports) {
 
-module.exports = require("babel-polyfill");
+module.exports = require("react-dom/server");
 
 /***/ }),
-/* 9 */
+/* 25 */
 /***/ (function(module, exports) {
 
-module.exports = require("express-http-proxy");
+module.exports = require("react-helmet");
 
 /***/ }),
-/* 10 */
+/* 26 */
 /***/ (function(module, exports) {
 
-module.exports = require("express");
+module.exports = require("serialize-javascript");
 
 /***/ }),
-/* 11 */
-/***/ (function(module, exports) {
-
-module.exports = require("morgan");
-
-/***/ }),
-/* 12 */
+/* 27 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -433,11 +838,11 @@ var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactRouterConfig = __webpack_require__(3);
+var _reactRouterConfig = __webpack_require__(5);
 
-var _index = __webpack_require__(1);
+var _index = __webpack_require__(3);
 
-var _Header = __webpack_require__(13);
+var _Header = __webpack_require__(28);
 
 var _Header2 = _interopRequireDefault(_Header);
 
@@ -463,7 +868,7 @@ exports.default = {
 };
 
 /***/ }),
-/* 13 */
+/* 28 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -477,7 +882,7 @@ var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactRouterDom = __webpack_require__(4);
+var _reactRouterDom = __webpack_require__(6);
 
 var _reactRedux = __webpack_require__(2);
 
@@ -537,7 +942,7 @@ var mapStateToProps = function mapStateToProps(_ref2) {
 exports.default = (0, _reactRedux.connect)(mapStateToProps)(Header);
 
 /***/ }),
-/* 14 */
+/* 29 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -573,7 +978,7 @@ var NotFound = function NotFound(_ref) {
 exports.default = { component: NotFound };
 
 /***/ }),
-/* 15 */
+/* 30 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -609,7 +1014,7 @@ var Home = function Home() {
 exports.default = { component: Home };
 
 /***/ }),
-/* 16 */
+/* 31 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -627,9 +1032,9 @@ var _react2 = _interopRequireDefault(_react);
 
 var _reactRedux = __webpack_require__(2);
 
-var _actions = __webpack_require__(1);
+var _actions = __webpack_require__(3);
 
-var _requireAuth = __webpack_require__(17);
+var _requireAuth = __webpack_require__(32);
 
 var _requireAuth2 = _interopRequireDefault(_requireAuth);
 
@@ -707,7 +1112,7 @@ exports.default = {
 };
 
 /***/ }),
-/* 17 */
+/* 32 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -725,7 +1130,7 @@ var _react2 = _interopRequireDefault(_react);
 
 var _reactRedux = __webpack_require__(2);
 
-var _reactRouterDom = __webpack_require__(4);
+var _reactRouterDom = __webpack_require__(6);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -775,84 +1180,7 @@ exports.default = function (ChildComponent) {
 };
 
 /***/ }),
-/* 18 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = rendereMarkup;
-
-var _react = __webpack_require__(0);
-
-var _react2 = _interopRequireDefault(_react);
-
-var _server = __webpack_require__(19);
-
-var _reactRouterDom = __webpack_require__(4);
-
-var _reactRedux = __webpack_require__(2);
-
-var _reactHelmet = __webpack_require__(20);
-
-var _serializeJavascript = __webpack_require__(21);
-
-var _serializeJavascript2 = _interopRequireDefault(_serializeJavascript);
-
-var _reactRouterConfig = __webpack_require__(3);
-
-var _routes = __webpack_require__(5);
-
-var _routes2 = _interopRequireDefault(_routes);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function rendereMarkup(_ref, store, context) {
-  var path = _ref.path;
-
-  var content = (0, _server.renderToString)(_react2.default.createElement(
-    _reactRedux.Provider,
-    { store: store },
-    _react2.default.createElement(
-      _reactRouterDom.StaticRouter,
-      { location: path, context: context },
-      _react2.default.createElement(
-        'div',
-        null,
-        (0, _reactRouterConfig.renderRoutes)(_routes2.default)
-      )
-    )
-  ));
-
-  var helmet = _reactHelmet.Helmet.renderStatic();
-  var initialState = store.getState();
-
-  return '\n<html>\n    <head>\n    ' + helmet.title.toString() + '\n    ' + helmet.meta.toString() + '\n    </head>\n    <body>\n      <div id="root">' + content + '</div>\n      <script>\n        window.INITIAL_STATE = ' + (0, _serializeJavascript2.default)(initialState) + '\n      </script>\n      <script src="bundle.js"></script>\n    </body>\n</html>\n';
-}
-
-/***/ }),
-/* 19 */
-/***/ (function(module, exports) {
-
-module.exports = require("react-dom/server");
-
-/***/ }),
-/* 20 */
-/***/ (function(module, exports) {
-
-module.exports = require("react-helmet");
-
-/***/ }),
-/* 21 */
-/***/ (function(module, exports) {
-
-module.exports = require("serialize-javascript");
-
-/***/ }),
-/* 22 */
+/* 33 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -862,17 +1190,17 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _redux = __webpack_require__(6);
+var _redux = __webpack_require__(8);
 
-var _reduxThunk = __webpack_require__(23);
+var _reduxThunk = __webpack_require__(34);
 
 var _reduxThunk2 = _interopRequireDefault(_reduxThunk);
 
-var _axios = __webpack_require__(24);
+var _axios = __webpack_require__(35);
 
 var _axios2 = _interopRequireDefault(_axios);
 
-var _reducers = __webpack_require__(25);
+var _reducers = __webpack_require__(36);
 
 var _reducers2 = _interopRequireDefault(_reducers);
 
@@ -892,19 +1220,19 @@ exports.default = function (req) {
 };
 
 /***/ }),
-/* 23 */
+/* 34 */
 /***/ (function(module, exports) {
 
 module.exports = require("redux-thunk");
 
 /***/ }),
-/* 24 */
+/* 35 */
 /***/ (function(module, exports) {
 
 module.exports = require("axios");
 
 /***/ }),
-/* 25 */
+/* 36 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -914,13 +1242,13 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _redux = __webpack_require__(6);
+var _redux = __webpack_require__(8);
 
-var _authReducer = __webpack_require__(26);
+var _authReducer = __webpack_require__(37);
 
 var _authReducer2 = _interopRequireDefault(_authReducer);
 
-var _todosReducer = __webpack_require__(27);
+var _todosReducer = __webpack_require__(38);
 
 var _todosReducer2 = _interopRequireDefault(_todosReducer);
 
@@ -932,7 +1260,7 @@ exports.default = (0, _redux.combineReducers)({
 });
 
 /***/ }),
-/* 26 */
+/* 37 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -957,7 +1285,7 @@ exports.default = function () {
   }
 };
 
-var _actions = __webpack_require__(1);
+var _actions = __webpack_require__(3);
 
 var _actions2 = _interopRequireDefault(_actions);
 
@@ -972,7 +1300,7 @@ var fetchCurrentUserReducer = exports.fetchCurrentUserReducer = function fetchCu
 };
 
 /***/ }),
-/* 27 */
+/* 38 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -995,7 +1323,7 @@ exports.default = function () {
   }
 };
 
-var _actions = __webpack_require__(1);
+var _actions = __webpack_require__(3);
 
 var _actions2 = _interopRequireDefault(_actions);
 
@@ -1006,12 +1334,6 @@ var fetchTodosReducer = exports.fetchTodosReducer = function fetchTodosReducer(_
       payload = _ref$payload === undefined ? [] : _ref$payload;
   return payload;
 };
-
-/***/ }),
-/* 28 */
-/***/ (function(module, exports) {
-
-module.exports = require("url");
 
 /***/ })
 /******/ ]);

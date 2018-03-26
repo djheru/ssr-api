@@ -3,7 +3,7 @@ import { addResultToUser, addUserToBody, requireUser, restrictToUser } from '../
 import logger from '../utils/logger';
 
 const log = logger.log('app:api:todo');
-log('Initializing Todo resource');
+log('Initializing Todo Resource');
 
 export default {
   model: mongoose.model('Todo'),

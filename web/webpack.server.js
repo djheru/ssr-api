@@ -8,7 +8,7 @@ const config = {
   target: 'node',
 
   // Server entry point
-  entry: './src/index.js',
+  entry: ['babel-polyfill', './src/index.js'],
 
   // output options
   output: {
