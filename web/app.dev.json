@@ -1,0 +1,15 @@
+{
+  "apps": [
+    {
+      "name": "ssr-web-dev",
+      "script": "build/bundle.js",
+      "watch":  [
+        "dist"
+      ],
+      "env": {
+        "DEBUG": "app:*",
+        "NODE_ENV": "development"
+      }
+    }
+  ]
+}
