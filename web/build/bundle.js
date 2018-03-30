@@ -574,7 +574,13 @@ var _handlers = __webpack_require__(22);
 
 var _handlers2 = _interopRequireDefault(_handlers);
 
+var _logger = __webpack_require__(1);
+
+var _logger2 = _interopRequireDefault(_logger);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var log = _logger2.default.log('app:routes:default');
 
 function initializeDefaultRoutes(router) {
   router.get('*', _handlers2.default);
@@ -583,7 +589,10 @@ function initializeDefaultRoutes(router) {
 function initializeRoutes(app) {
   var router = _express2.default.Router();
 
-  (0, _proxy2.default)(router);
+  if (process.env.NODE_ENV === 'development') {
+    log('Initializng Proxy Routes');
+    (0, _proxy2.default)(router);
+  }
   initializeDefaultRoutes(router);
 
   app.use('/', router);

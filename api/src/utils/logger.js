@@ -12,6 +12,7 @@ const logger = {
   appStarted(port, host) {
     const log = this.log();
     log(`Server started ! ${chalk.green('✓')}`);
+    log(`Environment: ${process.env.NODE_ENV || 'unknown'}`);
 
     const localhostUri = `http://${host}:${port}`;
     const lanUri = `http://${ip.address()}:${port}`;
