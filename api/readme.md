@@ -22,3 +22,4 @@ docker run -d --name ssr-api \
     -p 8000:8000 \
     --env-file ./.env \
     ssr-api:latest
+```
