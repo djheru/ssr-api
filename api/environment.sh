@@ -9,4 +9,5 @@ export MONGO_HOST_B="cluster0-shard-00-01-duq44.mongodb.net:27017"
 export MONGO_HOST_C="cluster0-shard-00-02-duq44.mongodb.net:27017"
 export PORT=8000
 export HOST=0.0.0.0
+export API_HOST="ssr-api-1025691558.us-east-1.elb.amazonaws.com"
 export DEBUG=app:*
