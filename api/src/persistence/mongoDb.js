@@ -2,8 +2,21 @@ import mongoose from 'mongoose';
 import logger from '../utils/logger';
 
 const log = logger.log('app:mongoDb');
-const { MONGO_URI: dbUrl } = process.env;
+const {
+  MONGO_USER,
+  MONGO_PASS,
+  MONGO_HOST_A,
+  MONGO_HOST_B,
+  MONGO_HOST_C
+} = process.env;
 
+const credentials = `${MONGO_USER}:${MONGO_PASS}`;
+const hosts = `${MONGO_HOST_A},${MONGO_HOST_B},${MONGO_HOST_C}`;
+const db = 'ssr_api';
+const params = 'ssl=true&replicaSet=Cluster0-shard-0&authSource=admin';
+
+const dbUrl = `mongodb://${credentials}@${hosts}/${db}?${params}`;
+console.log(dbUrl);
 mongoose.Promise = global.Promise;
 
 /**
