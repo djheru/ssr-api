@@ -39,7 +39,7 @@
   },
   "scripts": {
     "lint": "eslint ./src/** ./tests/**",
-    "pretest": "yarn run lint",
+    "pretest": "npm run lint",
     "test": "mocha -r babel-core/register -r ./tests/framework.js --exit './tests/**/*.spec.js'",
     "clean": "rimraf dist && mkdir -p ./dist",
     "babel": "babel ./src -s -q -D -d ./dist",

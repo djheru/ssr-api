@@ -1,3 +1,4 @@
+import 'dotenv/config';
 import initializeApplication from './app';
 
 import logger from './utils/logger';
