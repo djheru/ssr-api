@@ -13,7 +13,7 @@ export default function initializeRoutes(app) {
   const router = express.Router();
 
   if (process.env.NODE_ENV === 'development') {
-    log('Initializng Proxy Routes')
+    log('Initializng Proxy Routes');
     initializeProxyRoutes(router);
   }
   initializeDefaultRoutes(router);

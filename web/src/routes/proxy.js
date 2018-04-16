@@ -19,5 +19,5 @@ const proxyConfig = (pathPrefix) => ({
 export default function initializeProxyRoutes(router) {
   log('Initializing proxy routes');
   router.use('/api', proxy(apiProxyHost, proxyConfig('/api')));
-  router.use('/auth', proxy(authProxyHost, proxyConfig('/auth')));
+  // router.use('/auth', proxy(authProxyHost, proxyConfig('/auth')));
 }
