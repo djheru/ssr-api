@@ -2,13 +2,14 @@ import { createStore, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
 import axios from 'axios';
 import reducers from './client/reducers';
+import logger from './utils/logger';
 
-const HOST = process.env.HOST || 'localhost:8000';
-const PROTOCOL = process.env.PROTOCOL || 'http';
+const log = logger.log('app:client:createStore');
 
 export default (req) => {
+  log(req.cookies.session);
   const serverHttpClient = axios.create({
-    baseURL: `${PROTOCOL}://${HOST}/api/v1`,
+    baseURL: API_HOST + '/api/v1',
     headers: { cookie: req.get('cookie') || '' }
   });
 

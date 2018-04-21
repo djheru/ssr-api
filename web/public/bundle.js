@@ -3100,25 +3100,27 @@ var fetchCurrentUser = exports.fetchCurrentUser = function fetchCurrentUser() {
               _ref2 = _context.sent;
               payload = _ref2.data;
 
+              console.log(payload);
               dispatch({ type: type, payload: payload });
-              _context.next = 12;
+              _context.next = 14;
               break;
 
-            case 9:
-              _context.prev = 9;
+            case 10:
+              _context.prev = 10;
               _context.t0 = _context['catch'](0);
 
+              console.log('error: ', Object.keys(_context.t0));
               dispatch({
                 type: actions.FETCH_CURRENT_USER.FAILURE,
                 payload: _context.t0
               });
 
-            case 12:
+            case 14:
             case 'end':
               return _context.stop();
           }
         }
-      }, _callee, undefined, [[0, 9]]);
+      }, _callee, undefined, [[0, 10]]);
     }));
 
     return function (_x, _x2, _x3) {
@@ -13699,8 +13701,12 @@ var _routes2 = _interopRequireDefault(_routes);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+console.log({
+  baseURL: "http://localhost:8000" + '/api/v1'
+});
+
 var httpClient = _axios2.default.create({
-  baseURL: '/api/v1'
+  baseURL: "http://localhost:8000" + '/api/v1'
 });
 
 var composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || _redux.compose;

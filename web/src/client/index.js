@@ -10,8 +10,12 @@ import axios from 'axios';
 import reducers from './reducers';
 import routes from './routes';
 
+console.log({
+  baseURL: API_HOST + '/api/v1'
+});
+
 const httpClient = axios.create({
-  baseURL: '/api/v1'
+  baseURL: API_HOST + '/api/v1'
 });
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;

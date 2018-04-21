@@ -1,7 +1,11 @@
+require('dotenv').config();
 const path = require('path');
 const merge = require('webpack-merge');
 const baseConfig = require('./webpack.base');
 const webpackNodeExternals = require('webpack-node-externals');
+const webpack = require('webpack');
+
+const { API_HOST } = process.env;
 
 const config = {
   // Use node.js environment, not browser
@@ -17,7 +21,12 @@ const config = {
   },
 
   // Don't bundle stuff from node_modules
-  externals: [webpackNodeExternals()]
+  externals: [webpackNodeExternals()],
+  plugins: [
+    new webpack.DefinePlugin({
+      API_HOST: JSON.stringify(API_HOST)
+    })
+  ]
 };
 
 
