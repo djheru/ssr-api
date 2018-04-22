@@ -62,6 +62,8 @@ export const addResultToUser = (resultField) => async (req, res, next) => {
 export function requireUser(req, res, next) {
   if (!req.user) {
     return res.status(401).send({ error: 'You must log in!' });
+  } else {
+    log('User authenticated');
   }
   return next();
 }

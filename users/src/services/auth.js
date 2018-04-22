@@ -33,7 +33,8 @@ const serializeUser = (user, done) => {
 
 export const deserializeUser = async (id, done) => {
   try {
-    const user = await User.findById(id).exec();
+    log(`ID: ${id}`);
+    const user = await User.findOne(id).exec();
     done(null, user);
   } catch (e) {
     logger.error(e.message);

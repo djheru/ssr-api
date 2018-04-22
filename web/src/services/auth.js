@@ -4,7 +4,8 @@ import PassportGoogle from 'passport-google-oauth20';
 import logger from '../utils/logger';
 
 const { GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET } = process.env;
-const log = logger.log('app:server');
+
+const log = logger.log('app:services:auth');
 // const User = mongoose.model('User');
 const GoogleStrategy = PassportGoogle.Strategy;
 
@@ -27,15 +28,17 @@ const googleConfig = {
   proxy: true
 };
 
-const serializeUser = ({ id, accessToken = false, refreshToken = false}, done) => {
-  const serializedUser = (accessToken && refreshToken) ? JSON.stringify({ accessToken, refreshToken }) : id;
-  done(null, serializedUser);
+const serializeUser = ({ id:googleId, accessToken = false, refreshToken = false}, done) => {
+  const serializedUser = (accessToken && refreshToken) ? { accessToken, refreshToken, googleId } : { googleId };
+  done(null, JSON.stringify(serializedUser));
 };
 
 export const deserializeUser = async (id, done) => {
   try {
     // const user = await User.findById(id).exec();
-    done(null, id);
+    const userObject = JSON.parse(id);
+    log(userObject);
+    done(null, userObject);
   } catch (e) {
     logger.error(e.message);
     done(e);
@@ -50,7 +53,6 @@ export const updateUserProfile = async (accessToken, refreshToken, profile, done
   log(refreshToken);
   // log(profile);
   try {
-    log(accessToken, refreshToken);
     // const user = await User.findOrCreateSocial(profile);
     done(null, profile);
   } catch (e) {
