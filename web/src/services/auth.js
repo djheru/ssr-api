@@ -27,8 +27,9 @@ const googleConfig = {
   proxy: true
 };
 
-const serializeUser = (user, done) => {
-  done(null, user.id);
+const serializeUser = ({ id, accessToken = false, refreshToken = false}, done) => {
+  const serializedUser = (accessToken && refreshToken) ? JSON.stringify({ accessToken, refreshToken }) : id;
+  done(null, serializedUser);
 };
 
 export const deserializeUser = async (id, done) => {
@@ -47,7 +48,7 @@ export const updateUserProfile = async (accessToken, refreshToken, profile, done
   log('Updating user profile');
   log(accessToken);
   log(refreshToken);
-  log(profile);
+  // log(profile);
   try {
     log(accessToken, refreshToken);
     // const user = await User.findOrCreateSocial(profile);
