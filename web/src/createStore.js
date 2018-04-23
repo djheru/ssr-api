@@ -7,10 +7,11 @@ import logger from './utils/logger';
 const log = logger.log('app:client:createStore');
 
 export default (req) => {
-  log(req.cookies.session);
+  const Authorization = `Bearer ${req.cookies.token || ''}`;
+  const cookie = req.get('cookie') || '';
   const serverHttpClient = axios.create({
     baseURL: API_HOST + '/api/v1',
-    headers: { cookie: req.get('cookie') || '' }
+    headers: { Authorization, cookie }
   });
 
   const thunkMiddleware = thunk.withExtraArgument(serverHttpClient);

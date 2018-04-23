@@ -1,5 +1,9 @@
 import passport from 'passport';
 import { googlePermissionOptions } from '../services/auth';
+import logger from '../utils/logger';
+
+const log = logger.log('app:handlers:auth');
+const cookieDuration = 1000 * 60 * 60 * 24 * 7;
 
 export const authenticate = () =>
   passport.authenticate('google', googlePermissionOptions);
@@ -9,10 +13,15 @@ export const authCallback = () =>
 
 export const redirect = (route = '/') =>
   (req, res) => {
-    res.redirect(route);
+  const cookieParams = { maxAge: cookieDuration, expires: new Date(Date.now() + cookieDuration) };
+    res
+      .cookie('token', req.user, cookieParams)
+      .status(200)
+      .redirect(route);
   };
 
 export const logout = (route = '/') => (req, res) => {
   req.logout();
+  res.clearCookie('token');
   res.redirect(route);
 };

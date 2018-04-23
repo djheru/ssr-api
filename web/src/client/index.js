@@ -9,13 +9,13 @@ import { BrowserRouter } from 'react-router-dom';
 import axios from 'axios';
 import reducers from './reducers';
 import routes from './routes';
+import Cookie from 'js-cookie';
 
-console.log({
-  baseURL: API_HOST + '/api/v1'
-});
+const token = Cookie.get('token');
 
 const httpClient = axios.create({
-  baseURL: API_HOST + '/api/v1'
+  baseURL: API_HOST + '/api/v1',
+  headers: { Authorization: `Bearer ${token || ''}` }
 });
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;

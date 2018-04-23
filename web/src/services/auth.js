@@ -1,9 +1,10 @@
 import passport from 'passport';
 import PassportGoogle from 'passport-google-oauth20';
 // import mongoose from 'mongoose';
+import jwt from 'jsonwebtoken';
 import logger from '../utils/logger';
 
-const { GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET } = process.env;
+const { COOKIE_KEY, GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET } = process.env;
 
 const log = logger.log('app:services:auth');
 // const User = mongoose.model('User');
@@ -17,7 +18,8 @@ export const googlePermissionOptions = {
     'https://www.googleapis.com/auth/userinfo.profile',
     'https://www.googleapis.com/auth/calendar',
     'https://www.googleapis.com/auth/calendar.readonly'
-  ]
+  ],
+  session: false
 };
 
 const googleConfig = {
@@ -25,7 +27,7 @@ const googleConfig = {
   clientSecret: GOOGLE_CLIENT_SECRET,
   callbackURL: '/auth/google/callback',
   options: googlePermissionOptions,
-  proxy: true
+  //proxy: true
 };
 
 const serializeUser = ({ id:googleId, accessToken = false, refreshToken = false}, done) => {
@@ -48,13 +50,13 @@ export const deserializeUser = async (id, done) => {
 export const updateUserProfile = async (accessToken, refreshToken, profile, done) => {
   profile.accessToken = accessToken;
   profile.refreshToken = refreshToken;
-  log('Updating user profile');
-  log(accessToken);
-  log(refreshToken);
-  // log(profile);
+  const { _raw, ...user } = profile;
   try {
     // const user = await User.findOrCreateSocial(profile);
-    done(null, profile);
+    const token = await new Promise((resolve, reject) =>
+      jwt.sign(user, COOKIE_KEY, (err, jwt) => (err) ? reject(err) : resolve(jwt)));
+
+    done(null, token);
   } catch (e) {
     logger.error(e.message);
     done(e);

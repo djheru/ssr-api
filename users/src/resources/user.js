@@ -1,5 +1,6 @@
 import mongoose from 'mongoose';
-import { requireUser, restrictToUser, forbidden } from '../middleware/userRelations';
+import { /*requireUser, restrictToUser,*/ forbidden } from '../middleware/userRelations';
+import { authenticateJWT } from '../handlers/auth';
 
 import logger from '../utils/logger';
 
@@ -11,8 +12,9 @@ export default {
   options: {// express-restify-mongoose options
     prefix: '',
     preMiddleware: [
-      requireUser,
-      restrictToUser('_id')
+      // requireUser,
+      // restrictToUser('_id')
+      authenticateJWT()
     ],
     preCreate: forbidden,
     preUpdate: forbidden,

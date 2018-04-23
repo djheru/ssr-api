@@ -1,7 +1,7 @@
 import express from 'express';
 import {
-  authenticate,
-  authCallback,
+  authenticateGoogle,
+  authenticateGoogleCallback,
   redirect,
   logout
 } from '../handlers/auth';
@@ -9,8 +9,8 @@ import {
 const router = express.Router();
 
 export const initializeAuthRoutes = (app) => {
-  router.get('/google', authenticate());
-  router.get('/google/callback', authCallback(), redirect('/'));
+  router.get('/google', authenticateGoogle());
+  router.get('/google/callback', authenticateGoogleCallback(), redirect('/'));
   router.get('/logout', logout('/'));
 
   app.use('/auth', router);
