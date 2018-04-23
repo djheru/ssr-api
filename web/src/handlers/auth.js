@@ -13,11 +13,7 @@ export const authCallback = () =>
 
 export const redirect = (route = '/') =>
   (req, res) => {
-  const cookieParams = { maxAge: cookieDuration, expires: new Date(Date.now() + cookieDuration) };
-    res
-      .cookie('token', req.user, cookieParams)
-      .status(200)
-      .redirect(route);
+    res.redirect(route);
   };
 
 export const logout = (route = '/') => (req, res) => {

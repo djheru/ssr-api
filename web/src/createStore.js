@@ -7,6 +7,7 @@ import logger from './utils/logger';
 const log = logger.log('app:client:createStore');
 
 export default (req) => {
+  log(req.user);
   const Authorization = `Bearer ${req.cookies.token || ''}`;
   const cookie = req.get('cookie') || '';
   const serverHttpClient = axios.create({

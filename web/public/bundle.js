@@ -3100,13 +3100,12 @@ var fetchCurrentUser = exports.fetchCurrentUser = function fetchCurrentUser() {
               _ref2 = _context.sent;
               payload = _ref2.data;
 
-              console.log(payload);
               dispatch({ type: type, payload: payload });
-              _context.next = 14;
+              _context.next = 13;
               break;
 
-            case 10:
-              _context.prev = 10;
+            case 9:
+              _context.prev = 9;
               _context.t0 = _context['catch'](0);
 
               console.log('error: ', Object.keys(_context.t0));
@@ -3115,12 +3114,12 @@ var fetchCurrentUser = exports.fetchCurrentUser = function fetchCurrentUser() {
                 payload: _context.t0
               });
 
-            case 14:
+            case 13:
             case 'end':
               return _context.stop();
           }
         }
-      }, _callee, undefined, [[0, 10]]);
+      }, _callee, undefined, [[0, 9]]);
     }));
 
     return function (_x, _x2, _x3) {

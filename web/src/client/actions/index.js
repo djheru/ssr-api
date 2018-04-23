@@ -9,7 +9,6 @@ export const fetchCurrentUser = () => async (dispatch, getState, httpClient) => 
   try {
     const type = actions.FETCH_CURRENT_USER.SUCCESS;
     const { data: payload } = await httpClient.get('/user');
-    console.log(payload);
     dispatch({ type, payload });
   } catch (e) {
     console.log('error: ', Object.keys(e));

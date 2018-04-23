@@ -19,7 +19,7 @@ export const googlePermissionOptions = {
     'https://www.googleapis.com/auth/calendar',
     'https://www.googleapis.com/auth/calendar.readonly'
   ],
-  session: false
+  session: true
 };
 
 const googleConfig = {
@@ -31,15 +31,17 @@ const googleConfig = {
 };
 
 const serializeUser = ({ id:googleId, accessToken = false, refreshToken = false}, done) => {
+  log('serialize');
   const serializedUser = (accessToken && refreshToken) ? { accessToken, refreshToken, googleId } : { googleId };
   done(null, JSON.stringify(serializedUser));
 };
 
-export const deserializeUser = async (id, done) => {
+export const deserializeUser = async (userData, done) => {
   try {
+    log('deserialize');
     // const user = await User.findById(id).exec();
-    const userObject = JSON.parse(id);
-    log(userObject);
+    const userObject = JSON.parse(userData);
+    // log(userObject);
     done(null, userObject);
   } catch (e) {
     logger.error(e.message);
@@ -56,7 +58,7 @@ export const updateUserProfile = async (accessToken, refreshToken, profile, done
     const token = await new Promise((resolve, reject) =>
       jwt.sign(user, COOKIE_KEY, (err, jwt) => (err) ? reject(err) : resolve(jwt)));
 
-    done(null, token);
+    done(null, user);
   } catch (e) {
     logger.error(e.message);
     done(e);

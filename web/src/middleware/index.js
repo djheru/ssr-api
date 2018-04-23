@@ -15,14 +15,14 @@ export default function initializeMiddleware(app) {
   app.use(cookieParser());
   app.use(morgan('dev', { skip: () => app.get('env') === 'test' }));
   app.use(express.static('public'));
-  /*app.use(
+  app.use(
     cookieSession({
       maxAge: 30 * 24 * 60 * 60 * 1000,
       keys: [COOKIE_KEY]
     })
-  );*/
+  );
   app.use((req, res, next) => {
-    log(req.cookies);
+    // log(req.cookies);
     next();
   });
 }

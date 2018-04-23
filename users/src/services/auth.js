@@ -5,7 +5,7 @@ import mongoose from 'mongoose';
 import logger from '../utils/logger';
 
 const { API_HOST, COOKIE_KEY/*, GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET*/ } = process.env;
-const log = logger.log('app:server');
+const log = logger.log('app:services:auth');
 const User = mongoose.model('User');
 // const GoogleStrategy = PassportGoogle.Strategy;
 const JWTStrategy = PassportJWT.Strategy;
