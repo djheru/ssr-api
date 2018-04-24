@@ -4,7 +4,7 @@ import createStore from '../createStore';
 import routes from '../client/routes';
 
 export default async function defaultRouteHandler(req, res) {
-  const store = createStore(req);
+  const store = await createStore(req);
   const context = {};
 
   try {

@@ -4,16 +4,20 @@ import axios from 'axios';
 import reducers from './client/reducers';
 import logger from './utils/logger';
 
+
+const {API_HOST, COOKIE_KEY} = process.env;
 const log = logger.log('app:client:createStore');
 
-export default (req) => {
-  log(req.user);
-  const Authorization = `Bearer ${req.cookies.token || ''}`;
-  const cookie = req.get('cookie') || '';
-  const serverHttpClient = axios.create({
-    baseURL: API_HOST + '/api/v1',
-    headers: { Authorization, cookie }
-  });
+export default async (req) => {
+  const headers = {};
+  const baseURL = `${API_HOST}/api/v1`;
+
+  if (req.user && req.user.token) {
+    log('Adding auth token to axios');
+    headers.Authorization = `Bearer ${req.user.token || ''}`;
+  }
+
+  const serverHttpClient = axios.create({ baseURL, headers });
 
   const thunkMiddleware = thunk.withExtraArgument(serverHttpClient);
   return createStore(reducers, {}, applyMiddleware(thunkMiddleware));

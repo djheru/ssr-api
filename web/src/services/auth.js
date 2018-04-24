@@ -30,18 +30,17 @@ const googleConfig = {
   //proxy: true
 };
 
-const serializeUser = ({ id:googleId, accessToken = false, refreshToken = false}, done) => {
+const serializeUser = (userData, done) => {
   log('serialize');
-  const serializedUser = (accessToken && refreshToken) ? { accessToken, refreshToken, googleId } : { googleId };
-  done(null, JSON.stringify(serializedUser));
+  done(null, JSON.stringify(userData));
 };
 
 export const deserializeUser = async (userData, done) => {
   try {
     log('deserialize');
-    // const user = await User.findById(id).exec();
     const userObject = JSON.parse(userData);
-    // log(userObject);
+    userObject.token = await new Promise((resolve, reject) =>
+      jwt.sign(userObject, COOKIE_KEY, (err, jwt) => (err) ? reject(err) : resolve(jwt)));
     done(null, userObject);
   } catch (e) {
     logger.error(e.message);
@@ -54,16 +53,15 @@ export const updateUserProfile = async (accessToken, refreshToken, profile, done
   profile.refreshToken = refreshToken;
   const { _raw, ...user } = profile;
   try {
-    // const user = await User.findOrCreateSocial(profile);
-    const token = await new Promise((resolve, reject) =>
-      jwt.sign(user, COOKIE_KEY, (err, jwt) => (err) ? reject(err) : resolve(jwt)));
-
     done(null, user);
   } catch (e) {
     logger.error(e.message);
     done(e);
   }
 };
+
+export const signJWT = async (user) => await new Promise((resolve, reject) =>
+  jwt.sign(user, COOKIE_KEY, (err, jwt) => (err) ? reject(err) : resolve(jwt)));
 
 const authStrategy = new GoogleStrategy(googleConfig, updateUserProfile);
 

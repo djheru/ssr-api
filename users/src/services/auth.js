@@ -4,12 +4,14 @@ import PassportJWT from 'passport-jwt';
 import mongoose from 'mongoose';
 import logger from '../utils/logger';
 
-const { API_HOST, COOKIE_KEY/*, GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET*/ } = process.env;
+const { API_HOST, COOKIE_KEY, GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET } = process.env;
 const log = logger.log('app:services:auth');
 const User = mongoose.model('User');
 // const GoogleStrategy = PassportGoogle.Strategy;
 const JWTStrategy = PassportJWT.Strategy;
 const ExtractJWT = PassportJWT.ExtractJwt;
+import refresh, { checkTokenValidity } from 'google-refresh-token';
+import axios from 'axios';
 
 export const jwtOptions = {
   jwtFromRequest: ExtractJWT.fromAuthHeaderAsBearerToken(),
@@ -59,14 +61,58 @@ export const googlePermissionOptions = {
 
 export const updateUserProfile = async (userData, done) => {
   try {
-    log('user data');
-    log(userData);
+    log('updateUserProfile');
+    const tokenIsValid = await validateToken(userData.accessToken);
+    if (!tokenIsValid) {
+      const newToken = await reauthenticate(userData.refreshToken);
+      log('New token created');
+      userData.accessToken = newToken;
+    }
     const user = await User.findOrCreateSocial(userData);
     done(null, user);
   } catch (e) {
     logger.error(e.message);
     done(e);
   }
+};
+
+export const validateToken = async (accessToken) => {
+  log('Validating Token');
+  try {
+    const response = await axios.get('https://www.googleapis.com/oauth2/v1/userinfo', {
+      params: { alt: 'json ' },
+      headers: { Authorization: `Bearer ${accessToken}` }
+    });
+    return !!response;
+  } catch (e) {
+    logger.error(e);
+    return false;
+  }
+};
+
+export const reauthenticate = async (refreshToken) => {
+  log('Refresh Token: ', refreshToken);
+
+  return new Promise((resolve, reject) => {
+    refresh(refreshToken, GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET, (err, json, res) => {
+      if (err) {
+        log('Error getting refresh token');
+        return reject(err);
+      }
+      if (json.error) {
+        const msg = `${res.statusCode}: ${json.error}`;
+        log(msg);
+        return reject(new Error(msg));
+      }
+      const newAccessToken = json.accessToken;
+      if (!newAccessToken) {
+        const msg = `${res.statusCode}: refreshToken error`;
+        log(msg);
+        return reject(new Error(msg));
+      }
+      return resolve(newAccessToken);
+    });
+  });
 };
 
 // const authStrategy = new GoogleStrategy(googleConfig, updateGoogleProfile);

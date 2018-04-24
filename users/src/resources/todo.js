@@ -1,5 +1,6 @@
 import mongoose from 'mongoose';
-import { addResultToUser, addUserToBody, requireUser, restrictToUser } from '../middleware/userRelations';
+import { addResultToUser, addUserToBody, /*requireUser, restrictToUser*/ } from '../middleware/userRelations';
+import { authenticateJWT } from '../handlers/auth';
 import logger from '../utils/logger';
 
 const log = logger.log('app:api:todo');
@@ -10,8 +11,7 @@ export default {
   options: {// express-restify-mongoose options
     prefix: '',
     preMiddleware: [
-      requireUser,
-      restrictToUser()
+      authenticateJWT()
     ],
     preCreate: addUserToBody,
     postCreate: addResultToUser('todos'),

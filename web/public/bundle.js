@@ -3101,20 +3101,19 @@ var fetchCurrentUser = exports.fetchCurrentUser = function fetchCurrentUser() {
               payload = _ref2.data;
 
               dispatch({ type: type, payload: payload });
-              _context.next = 13;
+              _context.next = 12;
               break;
 
             case 9:
               _context.prev = 9;
               _context.t0 = _context['catch'](0);
 
-              console.log('error: ', Object.keys(_context.t0));
               dispatch({
                 type: actions.FETCH_CURRENT_USER.FAILURE,
                 payload: _context.t0
               });
 
-            case 13:
+            case 12:
             case 'end':
               return _context.stop();
           }
@@ -13704,7 +13703,7 @@ var _jsCookie2 = _interopRequireDefault(_jsCookie);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var token = _jsCookie2.default.get('token');
+var token = _jsCookie2.default.get('session');
 
 var httpClient = _axios2.default.create({
   baseURL: "http://localhost:8000" + '/api/v1',
