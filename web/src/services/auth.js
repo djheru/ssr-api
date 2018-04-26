@@ -39,8 +39,9 @@ export const deserializeUser = async (userData, done) => {
   try {
     log('deserialize');
     const userObject = JSON.parse(userData);
-    userObject.token = await new Promise((resolve, reject) =>
-      jwt.sign(userObject, COOKIE_KEY, (err, jwt) => (err) ? reject(err) : resolve(jwt)));
+    /*userObject.token = await new Promise((resolve, reject) =>
+      jwt.sign(userObject, COOKIE_KEY, (err, jwt) => (err) ? reject(err) : resolve(jwt)));*/
+    log(userObject);
     done(null, userObject);
   } catch (e) {
     logger.error(e.message);
@@ -49,9 +50,11 @@ export const deserializeUser = async (userData, done) => {
 };
 
 export const updateUserProfile = async (accessToken, refreshToken, profile, done) => {
+  log('update user profile');
   profile.accessToken = accessToken;
   profile.refreshToken = refreshToken;
-  const { _raw, ...user } = profile;
+  profile.jwt = await signJWT(profile);
+  const { _json, _raw, ...user } = profile;
   try {
     done(null, user);
   } catch (e) {
@@ -60,8 +63,12 @@ export const updateUserProfile = async (accessToken, refreshToken, profile, done
   }
 };
 
-export const signJWT = async (user) => await new Promise((resolve, reject) =>
-  jwt.sign(user, COOKIE_KEY, (err, jwt) => (err) ? reject(err) : resolve(jwt)));
+export const signJWT = async ({ emails, accessToken, refreshToken }) => await new Promise((resolve, reject) =>
+  jwt.sign({
+    email: emails[0].value,
+    accessToken,
+    refreshToken
+  }, COOKIE_KEY, (err, jwt) => (err) ? reject(err) : resolve(jwt)));
 
 const authStrategy = new GoogleStrategy(googleConfig, updateUserProfile);
 

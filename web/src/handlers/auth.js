@@ -13,11 +13,26 @@ export const authCallback = () =>
 
 export const redirect = (route = '/') =>
   (req, res) => {
-    res.redirect(route);
+    if (req.user && req.user.jwt) {
+      const cookieParams = {
+        maxAge: cookieDuration,
+        expires: new Date(Date.now() + cookieDuration)
+      };
+      res
+        .cookie('jwt', req.user.jwt, cookieParams)
+        .status(200)
+        .redirect(route)
+    } else {
+      res
+        .status(200)
+        .redirect(route);
+    }
   };
 
 export const logout = (route = '/') => (req, res) => {
   req.logout();
-  res.clearCookie('token');
+  res.clearCookie('jwt');
+  res.clearCookie('session');
+  res.clearCookie('session.sig');
   res.redirect(route);
 };

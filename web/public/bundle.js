@@ -13703,7 +13703,8 @@ var _jsCookie2 = _interopRequireDefault(_jsCookie);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var token = _jsCookie2.default.get('session');
+var token = _jsCookie2.default.get('jwt');
+console.log(token);
 
 var httpClient = _axios2.default.create({
   baseURL: "http://localhost:8000" + '/api/v1',

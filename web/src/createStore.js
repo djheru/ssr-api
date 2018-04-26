@@ -11,10 +11,9 @@ const log = logger.log('app:client:createStore');
 export default async (req) => {
   const headers = {};
   const baseURL = `${API_HOST}/api/v1`;
-
-  if (req.user && req.user.token) {
+  if (req.user && req.user.jwt) {
     log('Adding auth token to axios');
-    headers.Authorization = `Bearer ${req.user.token || ''}`;
+    headers.Authorization = `Bearer ${req.user.jwt || ''}`;
   }
 
   const serverHttpClient = axios.create({ baseURL, headers });

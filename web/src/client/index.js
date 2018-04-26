@@ -11,7 +11,8 @@ import reducers from './reducers';
 import routes from './routes';
 import Cookie from 'js-cookie';
 
-const token = Cookie.get('session');
+const token = Cookie.get('jwt');
+console.log(token);
 
 const httpClient = axios.create({
   baseURL: API_HOST + '/api/v1',
